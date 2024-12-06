@@ -1,0 +1,676 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F7F6FF;
+    --primary-color: #6022c3;
+}
+
+.bg-main {
+    background-color: #F7F6FF;
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 120px;
+    height: 90px;
+    box-shadow: 0 4px 10px rgba(31, 31, 31, 0.1);
+    background-color: #ffffff;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #D73FEE;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Space between menu items */
+}
+
+.nav-item {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    height: 90px;
+    padding: 0 12px; /* Padding on left and right */
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.nav-item:hover {
+    color: #D73FEE; /* Warna hover untuk item non-aktif */
+}
+
+.nav-item.active {
+    font-weight: 700;
+}
+
+.nav-item.active:hover {
+    color: var(--primary-color); /* Warna tetap untuk item aktif saat hover */
+}
+
+.nav-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.icomoon-free--home {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='m16 9.226l-8-6.21l-8 6.21V6.694l8-6.21l8 6.21zM14 9v6h-4v-4H6v4H2V9l6-4.5z'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.appointment-button {
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF; /* Warna teks */
+    background-color: #6022C3; /* Background button */
+    border: none;
+    padding: 16px 16px;
+    border-radius: 8px;
+    transition: 0.3s; /* Smooth transition saat hover */
+    margin: 14px;
+    padding: 16px 16px; /* Menambah padding pada kiri dan kanan */
+}
+
+.appointment-button:hover {
+    background-color: #D73FEE;
+    color: #FFFFFF;
+}
+
+.bxs--user-circle {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    padding: 10px; /* Menambah padding */
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10s10-4.579 10-10S17.421 2 12 2m0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3m-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+/* Styling untuk ikon burger di layar kecil */
+.mobile-menu-toggle {
+    display: none; /* Sembunyikan pada layar besar */
+}
+
+/* Overlay untuk popup */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Sembunyikan secara default */
+    z-index: 10;
+}
+
+/* Menu popup untuk layar kecil */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 20px;
+        height: 60px;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50%; /* Memperkecil ukuran menu popup */
+        height: auto;
+        max-height: 300px; /* Batasi tinggi menu */
+        background-color: #ffffff;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+        padding-top: 20px; /* Jarak atas menu */
+        padding-bottom: 20px; /* Jarak bawah menu */
+        gap: 10px; /* Jarak antar item */
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 11;
+        overflow-y: auto; /* Scroll jika menu terlalu panjang */
+        border-radius: 8px 0 0 8px; /* Membuat sudut membulat */
+    }
+
+    .nav-menu.show {
+        transform: translateX(0);
+    }
+
+    .nav-item {
+        padding: 10px 20px; /* Padding item menu */
+        width: 100%;
+        font-size: 14px; /* Ukuran font yang lebih kecil */
+    }
+
+    .nav-item.active {
+        font-weight: bold; /* Tanda aktif dengan teks tebal */
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        font-size: 24px;
+        cursor: pointer;
+        color: #6022C3;
+    }
+}
+
+/* Tombol appointment responsif */
+@media (max-width: 480px) {
+    .appointment-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* Judul */
+h3 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1F1F1F; /* Warna teks */
+    padding: 0 200px; /* Padding 120px untuk kanan dan kiri */
+    margin-top: 80px; /* Jarak 80px di bawah navbar */
+}
+
+/* Responsive untuk tampilan kecil */
+@media (max-width: 768px) {
+    h3 {
+        font-size: 24px;
+        margin-top: 40px;
+        padding: 0 20px; /* Padding 20px untuk kanan dan kiri pada layar kecil */
+    }
+}
+
+/* General Styles */
+.appointment-section {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    padding: 0 200px; /* Adjusted padding to make it 200px from screen edges */
+}
+
+.appointment-form-container {
+    display: flex;
+    gap: 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0px 4px 12px rgba(215, 63, 238, 0.15);
+    padding: 32px;
+    width: 100%; /* Make the form container take the full width of the parent */
+    max-width: 1600px; /* Set a max-width to prevent it from becoming too wide on larger screens */
+}
+
+/* Schedule Styles */
+.schedule {
+    flex: 1;
+}
+
+.schedule h4 {
+    font-size: 24px;
+    color: #1F1F1F;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.schedule-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+
+.schedule ul {
+    list-style: none;
+    padding: 0;
+}
+
+.schedule li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #4B4B4B;
+    padding: 10px 0;
+    border-bottom: 1px solid #F3C8FE;
+}
+
+/* Appointment Form Styles */
+.appointment-form {
+    flex: 1;
+}
+
+.appointment-form h4 {
+    font-size: 24px;
+    color: #1F1F1F;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    color: #8E8E8E;
+    padding: 4px 0;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #4B4B4B;
+    border: 1px solid #F3C8FE;
+    border-radius: 5px;
+    background-color: #FDF5FF;
+}
+
+.form-group.d-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Agar kolom tanggal lahir dan jenis kelamin memiliki lebar yang sama */
+.col-md-5 {
+    flex: 1;
+}
+
+.form-control:focus {
+    border-color: #D73FEE;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Submit Button Style */
+.btn-primary {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF; /* Warna teks */
+    background-color: #6022C3; /* Background button */
+    border: none;
+    padding: 16px 16px;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #D73FEE;
+}
+
+@media (max-width: 768px) {
+    .appointment-section {
+        padding: 0 20px; /* Adjust padding for smaller screens */
+    }
+
+    .appointment-form-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .schedule, .appointment-form {
+        flex: 1;
+    }
+}
+
+
+/* Style untuk section CTA */
+.cta-section {
+    background-image: url('/Aset Gambar/cta-image.jpg');
+    background-size: cover;
+    background-position: center; /* Fokus pada bagian tengah gambar */
+    position: relative; /* Agar pseudo-element dapat diposisikan dengan benar */
+    padding: 64px;
+    margin: 0 200px;
+    margin-top: 120px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Mencegah konten melampaui batas */
+}
+
+/* Pseudo-element untuk warna latar belakang semi-transparan */
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(142, 76, 255, 0.8); /* Menggunakan warna dengan transparansi 80% */
+    z-index: 1; /* Memastikan warna berada di belakang konten */
+    border-radius: 16px; /* Sesuaikan dengan border-radius section */
+}
+
+.cta-content {
+    position: relative; /* Agar konten muncul di atas pseudo-element */
+    max-width: 100%; /* Batas lebar sesuai dengan padding layar */
+    text-align: center;
+    color: #ffffff;
+    z-index: 2; /* Pastikan konten berada di atas latar belakang */
+}
+
+.cta-text {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.cta-button {
+    padding: 16px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.primary-button {
+    background-color: transparent; /* Ganti background menjadi transparan */
+    color: #ffffff; /* Warna teks */
+    border: 1px solid #ffffff; /* Border 1px warna putih */
+}
+
+.primary-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff; /* Warna teks saat hover */
+}
+
+.secondary-button {
+    background-color: #ffffff;
+    color: #6022C3;
+}
+
+.secondary-button:hover {
+    background-color: #6022C3;
+    color: #ffffff;
+}
+
+/* Responsive untuk tampilan lebih kecil */
+@media (max-width: 768px) {
+    .cta-section {
+        padding: 32px;
+        margin: 0 20px;
+        margin-top: 120px;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .cta-button {
+        width: 100%;
+    }
+}
+
+/* Style untuk section FOOTER */
+.footer {
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 60px 120px;
+    background: #e2ddfe;
+}
+
+/* Responsive untuk layar kecil */
+@media (max-width: 768px) {
+    .footer {
+        padding: 40px 20px;  /* Mengurangi padding pada layar kecil */
+        /* Pusatkan konten di layar kecil */
+    }
+}
+
+
+/* Judul footer */
+.footer-title {
+    color: #6022c3;
+    font-family: Public Sans, var(--default-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 48px;
+    width: 350px;
+}
+
+/* Tata letak isi footer dengan jarak seimbang */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    width: 100%;
+    margin-top: 32px;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column; /* Atur layout menjadi kolom */
+        gap: 40px; /* Atur jarak antar konten */
+    }
+}
+
+/* Pengaturan dasar tiap section */
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Pengaturan khusus untuk section alamat-praktik */
+.alamat-praktik {
+    margin-right: 24px;
+    min-width: 340px;
+}
+
+/* Pengaturan khusus untuk section layanan, jadwal praktik, dan kontak kami */
+.layanan, .jadwal-kontak, .ikuti-kami {
+    margin-left: 40px;
+}
+
+@media (max-width: 768px) {
+    .layanan, .jadwal-kontak, .ikuti-kami {
+        flex-direction: column; /* Atur layout menjadi kolom */
+        margin-left: 0px;
+    }
+}
+
+.kontak-section {
+    margin-top: 24px; /* Menambahkan jarak 24px di atas Kontak Kami */
+}
+
+.kontak-section .section-title {
+    margin-bottom: 12px !important; /* Menambah jarak 12px dengan prioritas tinggi */
+}
+
+.kontak-section .section-info {
+    margin-top: 0 !important; /* Pastikan tidak ada jarak atas */
+}
+
+
+/* Pengaturan judul tiap bagian */
+.section-title {
+    color: #1f1f1f;
+    font-family: Public Sans, var(--default-font-family);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Pengaturan teks alamat dan section-info lain agar seragam */
+.section-info {
+    color: #4b4b4b;
+    font-family: Public Sans, var(--default-font-family);
+    font-size: 16px;
+    margin-top: 12px;
+}
+
+/* Tata letak layanan dengan susunan vertikal */
+.layanan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Item layanan */
+.layanan-list span {
+    color: #4b4b4b;
+    font-family: Public Sans, var(--default-font-family);
+    font-size: 16px;
+}
+
+/* Bagian bawah footer */
+.footer-bottom {
+    color: #ffffff;
+    font-family: Public Sans, var(--default-font-family);
+    text-align: center;
+    background: #6022c3;
+    width: 100%; /* Lebar penuh layar */
+    padding: 16px 0;
+    box-sizing: border-box;
+}
+
+/* Tata letak horizontal untuk ikon dan teks */
+.social-icons {
+    display: flex;
+    color: #4b4b4b;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Ukuran ikon */
+.skill-icons--instagram,
+.logos--whatsapp-icon,
+.logos--tiktok-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.logos--tiktok-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 290'%3E%3Cpath fill='%23ff004f' d='M189.72 104.421c18.678 13.345 41.56 21.197 66.273 21.197v-47.53a67 67 0 0 1-13.918-1.456v37.413c-24.711 0-47.59-7.851-66.272-21.195v96.996c0 48.523-39.356 87.855-87.9 87.855c-18.113 0-34.949-5.473-48.934-14.86c15.962 16.313 38.222 26.432 62.848 26.432c48.548 0 87.905-39.332 87.905-87.857v-96.995zm17.17-47.952c-9.546-10.423-15.814-23.893-17.17-38.785v-6.113h-13.189c3.32 18.927 14.644 35.097 30.358 44.898M69.673 225.607a40 40 0 0 1-8.203-24.33c0-22.192 18.001-40.186 40.21-40.186a40.3 40.3 0 0 1 12.197 1.883v-48.593c-4.61-.631-9.262-.9-13.912-.801v37.822a40.3 40.3 0 0 0-12.203-1.882c-22.208 0-40.208 17.992-40.208 40.187c0 15.694 8.997 29.281 22.119 35.9'/%3E%3Cpath d='M175.803 92.849c18.683 13.344 41.56 21.195 66.272 21.195V76.631c-13.794-2.937-26.005-10.141-35.186-20.162c-15.715-9.802-27.038-25.972-30.358-44.898h-34.643v189.843c-.079 22.132-18.049 40.052-40.21 40.052c-13.058 0-24.66-6.221-32.007-15.86c-13.12-6.618-22.118-20.206-22.118-35.898c0-22.193 18-40.187 40.208-40.187c4.255 0 8.356.662 12.203 1.882v-37.822c-47.692.985-86.047 39.933-86.047 87.834c0 23.912 9.551 45.589 25.053 61.428c13.985 9.385 30.82 14.86 48.934 14.86c48.545 0 87.9-39.335 87.9-87.857z'/%3E%3Cpath fill='%2300f2ea' d='M242.075 76.63V66.516a66.3 66.3 0 0 1-35.186-10.047a66.47 66.47 0 0 0 35.186 20.163M176.53 11.57a68 68 0 0 1-.728-5.457V0h-47.834v189.845c-.076 22.13-18.046 40.05-40.208 40.05a40.06 40.06 0 0 1-18.09-4.287c7.347 9.637 18.949 15.857 32.007 15.857c22.16 0 40.132-17.918 40.21-40.05V11.571zM99.966 113.58v-10.769a89 89 0 0 0-12.061-.818C39.355 101.993 0 141.327 0 189.845c0 30.419 15.467 57.227 38.971 72.996c-15.502-15.838-25.053-37.516-25.053-61.427c0-47.9 38.354-86.848 86.048-87.833'/%3E%3C/svg%3E");
+}
+
+.skill-icons--instagram {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cg fill='none'%3E%3Crect width='256' height='256' fill='url(%23skillIconsInstagram0)' rx='60'/%3E%3Crect width='256' height='256' fill='url(%23skillIconsInstagram1)' rx='60'/%3E%3Cpath fill='%23fff' d='M128.009 28c-27.158 0-30.567.119-41.233.604c-10.646.488-17.913 2.173-24.271 4.646c-6.578 2.554-12.157 5.971-17.715 11.531c-5.563 5.559-8.98 11.138-11.542 17.713c-2.48 6.36-4.167 13.63-4.646 24.271c-.477 10.667-.602 14.077-.602 41.236s.12 30.557.604 41.223c.49 10.646 2.175 17.913 4.646 24.271c2.556 6.578 5.973 12.157 11.533 17.715c5.557 5.563 11.136 8.988 17.709 11.542c6.363 2.473 13.631 4.158 24.275 4.646c10.667.485 14.073.604 41.23.604c27.161 0 30.559-.119 41.225-.604c10.646-.488 17.921-2.173 24.284-4.646c6.575-2.554 12.146-5.979 17.702-11.542c5.563-5.558 8.979-11.137 11.542-17.712c2.458-6.361 4.146-13.63 4.646-24.272c.479-10.666.604-14.066.604-41.225s-.125-30.567-.604-41.234c-.5-10.646-2.188-17.912-4.646-24.27c-2.563-6.578-5.979-12.157-11.542-17.716c-5.562-5.562-11.125-8.979-17.708-11.53c-6.375-2.474-13.646-4.16-24.292-4.647c-10.667-.485-14.063-.604-41.23-.604zm-8.971 18.021c2.663-.004 5.634 0 8.971 0c26.701 0 29.865.096 40.409.575c9.75.446 15.042 2.075 18.567 3.444c4.667 1.812 7.994 3.979 11.492 7.48c3.5 3.5 5.666 6.833 7.483 11.5c1.369 3.52 3 8.812 3.444 18.562c.479 10.542.583 13.708.583 40.396s-.104 29.855-.583 40.396c-.446 9.75-2.075 15.042-3.444 18.563c-1.812 4.667-3.983 7.99-7.483 11.488c-3.5 3.5-6.823 5.666-11.492 7.479c-3.521 1.375-8.817 3-18.567 3.446c-10.542.479-13.708.583-40.409.583c-26.702 0-29.867-.104-40.408-.583c-9.75-.45-15.042-2.079-18.57-3.448c-4.666-1.813-8-3.979-11.5-7.479s-5.666-6.825-7.483-11.494c-1.369-3.521-3-8.813-3.444-18.563c-.479-10.542-.575-13.708-.575-40.413s.096-29.854.575-40.396c.446-9.75 2.075-15.042 3.444-18.567c1.813-4.667 3.983-8 7.484-11.5s6.833-5.667 11.5-7.483c3.525-1.375 8.819-3 18.569-3.448c9.225-.417 12.8-.542 31.437-.563zm62.351 16.604c-6.625 0-12 5.37-12 11.996c0 6.625 5.375 12 12 12s12-5.375 12-12s-5.375-12-12-12zm-53.38 14.021c-28.36 0-51.354 22.994-51.354 51.355s22.994 51.344 51.354 51.344c28.361 0 51.347-22.983 51.347-51.344c0-28.36-22.988-51.355-51.349-51.355zm0 18.021c18.409 0 33.334 14.923 33.334 33.334c0 18.409-14.925 33.334-33.334 33.334s-33.333-14.925-33.333-33.334c0-18.411 14.923-33.334 33.333-33.334'/%3E%3Cdefs%3E%3CradialGradient id='skillIconsInstagram0' cx='0' cy='0' r='1' gradientTransform='matrix(0 -253.715 235.975 0 68 275.717)' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23fd5'/%3E%3Cstop offset='.1' stop-color='%23fd5'/%3E%3Cstop offset='.5' stop-color='%23ff543e'/%3E%3Cstop offset='1' stop-color='%23c837ab'/%3E%3C/radialGradient%3E%3CradialGradient id='skillIconsInstagram1' cx='0' cy='0' r='1' gradientTransform='matrix(22.25952 111.2061 -458.39518 91.75449 -42.881 18.441)' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%233771c8'/%3E%3Cstop offset='.128' stop-color='%233771c8'/%3E%3Cstop offset='1' stop-color='%2360f' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3C/g%3E%3C/svg%3E");
+}
+
+.logos--whatsapp-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 258'%3E%3Cdefs%3E%3ClinearGradient id='logosWhatsappIcon0' x1='50%25' x2='50%25' y1='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%231faf38'/%3E%3Cstop offset='100%25' stop-color='%2360d669'/%3E%3C/linearGradient%3E%3ClinearGradient id='logosWhatsappIcon1' x1='50%25' x2='50%25' y1='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23f9f9f9'/%3E%3Cstop offset='100%25' stop-color='%23fff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23logosWhatsappIcon0)' d='M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a123 123 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004'/%3E%3Cpath fill='url(%23logosWhatsappIcon1)' d='M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416m40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513z'/%3E%3Cpath fill='%23fff' d='M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561s11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716s-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64'/%3E%3C/svg%3E");
+  }
+
+
+  .social-link, .telephone-link, .maps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Jarak antara ikon dan teks */
+    text-decoration: none;
+    color: inherit;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s; /* Transisi untuk efek halus */
+}
+
+.social-link:hover, .telephone-link:hover, .maps-link:hover {
+    background-color: tr; /* Warna latar belakang saat hover */
+    color: #0071eb; /* Warna teks saat hover */
+    border-radius: 4px; /* Tambahkan sudut membulat jika diperlukan */
+}
+
+
+
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    font-size: 16px;
+}
+
+.alert-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.alert .btn-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.nav-item img {
+    width: 60px; /* Ukuran gambar, sesuaikan sesuai kebutuhan */
+    height: 60px; /* Pastikan tinggi dan lebar sama untuk membuatnya bulat */
+    border-radius: 50%; /* Membuat gambar berbentuk lingkaran */
+    object-fit: cover; /* Menghindari gambar terdistorsi */
+    border: 2px solid #ccc; /* Opsional: Menambahkan border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Opsional: Memberikan bayangan */
+}

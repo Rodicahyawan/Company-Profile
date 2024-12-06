@@ -1,0 +1,113 @@
+body {
+    background-image: url('/Aset Gambar/background.jpg');
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;
+    background-position: center;
+    height: 100vh;
+}
+
+.login-container {
+    max-width: 430px;
+    margin: auto;
+    padding: 24px 24px; /* Kurangi padding atas dan bawah */
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1F1F1F;
+    text-align: center;
+    padding-bottom: 12px;
+}
+
+p {
+    font-size: 20px;
+    color: #4B4B4B;
+    text-align: center;
+    padding-bottom: 16px;
+}
+
+.form-group {
+    position: relative;
+    height: 40px; /* Menurunkan tinggi input untuk jarak lebih kecil */
+    font-size: 18px;
+    padding-bottom: 10px; /* Mengurangi jarak bawah */
+    margin-bottom: 12px; /* Menurunkan jarak antar form */
+    outline: none;
+}
+
+.btn-login {
+    background-color: #6022C3;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    padding: 12px; /* Menurunkan padding tombol */
+    border-radius: 8px;
+    border: none;
+}
+
+.btn-login:hover {
+    background-color: #D73FEE;
+    color: #FFFFFF;
+    border: none;
+}
+
+.register-option {
+    text-align: center;
+    padding-top: 24px; /* Mengurangi jarak atas opsi register */
+}
+
+.register-option p {
+    font-size: 16px;
+    color: #4B4B4B;
+}
+
+.register-link {
+    color: #6022C3;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    color: #D73FEE;
+    text-decoration: underline;
+}
+
+/* Styling responsif untuk layar kecil */
+@media (max-width: 576px) {
+    .d-flex {
+        padding: 0 20px;
+    }
+
+    .login-container {
+        padding: 16px; /* Mengurangi padding container pada layar kecil */
+        max-width: 100%;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .form-group {
+        font-size: 18px;
+        padding-bottom: 8px; /* Mengurangi padding bawah */
+        margin-bottom: 8px; /* Menurunkan jarak antar form */
+    }
+
+    .btn-login {
+        font-size: 14px;
+        padding: 10px; /* Menurunkan padding tombol pada layar kecil */
+    }
+
+    .register-option p {
+        font-size: 14px;
+    }
+}
