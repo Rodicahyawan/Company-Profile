@@ -96,11 +96,16 @@ npm run dev
   php artisan route:cache
   ```
 
-## Lisensi
+## Data Dummy
+Data dummy untuk akun (username dan password) telah disediakan melalui database seeder. Anda dapat menggunakan data berikut untuk mencoba aplikasi:
 
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+| **Username** | **Password** |
+|--------------|--------------|
+| `admin`      | `password`   |
+| `user`       | `password`   |
 
----
+Catatan:
+- Pastikan Anda telah menjalankan perintah `php artisan migrate --seed` untuk mengisi data dummy ke dalam database.
+- Anda dapat memeriksa atau memodifikasi data ini di file seeder yang terletak di direktori `database/seeders`.
 
-Selamat coding! 🚀
-```
+dengan detail proyek Anda. Jika ada tambahan, silakan beri tahu! 😊
