@@ -97,19 +97,13 @@ body {
     color: #FFFFFF;
 }
 
-.bxs--user-circle {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    padding: 10px; /* Menambah padding */
-    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10s10-4.579 10-10S17.421 2 12 2m0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3m-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228'/%3E%3C/svg%3E");
-    background-color: currentColor;
-    -webkit-mask-image: var(--svg);
-    mask-image: var(--svg);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
+/* Pastikan semua elemen gambar dan SVG di navbar tidak memiliki shadow */
+.navbar .nav-item img,
+.navbar .nav-item svg {
+    box-shadow: none;
+    filter: none;
+    background: none; /* Jika ada latar belakang sebelumnya */
+    border: none; /* Pastikan tidak ada border yang terlihat */
 }
 
 /* Styling untuk ikon burger di layar kecil */
@@ -178,6 +172,57 @@ body {
         color: #6022C3;
     }
 }
+
+/* CSS untuk form modal */
+.modal-title {
+    font-weight: bold; /* Membuat judul modal menjadi bold */
+    color: #6022C3; /* Mengatur warna judul modal */
+}
+
+/* Gaya untuk tombol */
+.btn-primary {
+    background-color: #6022C3; /* Warna tombol 'Batalkan' */
+    border: none; /* Menghilangkan border default */
+    padding: 12px 12px;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #D73FEE; /* Mengubah warna background saat hover pada tombol 'Batalkan' */
+    color: white; /* Mengubah warna teks saat hover */
+}
+
+.btn-secondary {
+    background-color: transparent; /* Warna tombol 'Tutup' transparan */
+    color: #6022C3; /* Warna teks tombol 'Tutup' */
+    border: 1px solid #6022C3; /* Mengatur border untuk tombol 'Tutup' */
+    padding: 12px 12px;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover {
+    background-color: #D73FEE; /* Mengubah warna background saat hover pada tombol 'Tutup' */
+    color: white; /* Mengubah warna teks saat hover */
+    border: 1px solid #D73FEE;
+}
+
+/* Gaya umum untuk modal */
+.modal-content {
+    border-radius: 10px; /* Mengatur sudut modal menjadi bulat */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Memberikan efek bayangan */
+}
+
+/* Menyesuaikan padding dan margin dalam modal */
+.modal-body {
+    padding: 24px; /* Menambahkan padding untuk isi modal */
+    font-size: 16px; /* Ukuran teks dalam modal */
+}
+
+.modal-footer .btn {
+    padding: 12px 12px;
+    border-radius: 8px;
+}
+
 
 /* Tombol appointment responsif */
 @media (max-width: 480px) {
@@ -322,30 +367,29 @@ body {
 }
 
 
-/* Profile Icon */
+/* Default styling for profile container */
 .profile-avatar {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 120px;
     height: 120px;
-    border-radius: 50%; /* Membuat lingkaran */
-    overflow: hidden;  /* Agar bagian luar lingkaran tidak terlihat */
-    background-color: #f0f0f0; /* Warna latar default jika gambar tidak ada */
 }
 
-.profile-avatar .icon-user-avatar {
-    width: 100%; /* Pastikan gambar memenuhi lingkaran */
-    height: 100%; /* Menyesuaikan tinggi */
-    object-fit: cover; /* Gambar akan memotong sesuai proporsi lingkaran */
+/* Styling for the uploaded image */
+.user-avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Optional if you want a circular image */
+    object-fit: cover;
+}
+
+/* Styling for the default SVG icon */
+.user-avatar-icon {
+    color: #6022C3;
+    width: 120px;
+    height: 120px;
     display: block;
-}
-
-.profile-avatar img {
-    width: 100%;        /* Mengatur gambar untuk mengisi elemen */
-    height: 100%;       /* Mengatur gambar untuk mengisi elemen */
-    object-fit: cover;  /* Menjadikan gambar mengisi seluruh area elemen */
-    object-position: center;  /* Menjaga posisi gambar tetap di tengah */
 }
 
 
@@ -572,6 +616,31 @@ body {
 
 .button-text-large-5 {
     color: #ffffff;
+}
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center; /* Mengatur bintang agar berada di tengah */
+    cursor: pointer;
+}
+
+.stars input[type="radio"] {
+    display: none;
+}
+
+.stars label {
+    font-size: 30px;
+    color: #ccc;
+    margin: 0 5px;
+}
+
+.stars input[type="radio"]:checked ~ label {
+    color: gold;
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+    color: gold;
 }
 
 /* Responsive Styles for Smaller Screens */

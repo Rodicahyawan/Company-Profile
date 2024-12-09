@@ -27,14 +27,15 @@ class AntreanController extends Controller
     {
         // Validasi input
         $validated = $request->validate([
-            'nama' => 'required|string',
+            'nama' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|string',
-            'nik' => 'required|string',
-            'keluhan' => 'required|string',
-            'layanan_id' => 'required|string',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'nik' => 'required|string|max:16|unique:antrean,nik,NULL,id,tanggal_kedatangan,' . $request->tanggal_kedatangan,
+            'keluhan' => 'nullable|string',
+            'layanan_id' => 'required|exists:layanan,id_layanan',
             'tanggal_kedatangan' => 'required|date',
         ]);
+        
 
         // Cek apakah sudah ada antrean dengan NIK dan tanggal kedatangan yang sama
         $existingAntrean = Antrean::where('nik', $validated['nik'])
@@ -62,14 +63,25 @@ class AntreanController extends Controller
             'jenis_kelamin' => $validated['jenis_kelamin'],
             'nik' => $validated['nik'],
             'keluhan' => $validated['keluhan'],
-            'layanan_id' => $validated['layanan_id'],
+            'layanan_id' => $validated['layanan_id'], // Tambahkan ini
             'tanggal_kedatangan' => $validated['tanggal_kedatangan'],
             'status_antrean' => 'Dalam Antrean',
-            'user_id' => auth()->id(), // Menggunakan user_id untuk mengaitkan dengan pengguna yang login
+            'user_id' => auth()->id(),
         ]);
+        
 
         return redirect()->route('user.janjitemu')->with('success', 'Janji temu berhasil dibuat!');
     }
+
+    public function markAsSelesai($id)
+    {
+        $antrean = Antrean::findOrFail($id);
+        $antrean->status_antrean = 'Selesai';
+        $antrean->save();
+
+        return redirect()->back()->with('success', 'Layanan telah selesai.');
+    }
+
 
     public function batalkan($id_antrean)
     {

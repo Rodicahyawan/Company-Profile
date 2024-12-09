@@ -145,7 +145,7 @@
                     @foreach($pengguna as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->nama_pengguna }}</td>
+                        <td>{{ $user->name }}</td>
                         <td>{{ $user->alamat }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->no_telepon ?? 'Tidak Tersedia' }}</td>
@@ -184,8 +184,8 @@
                             <form id="formTambahPengguna" action="{{ route('admin.datauser.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="nama_pengguna" class="form-label">Nama Pengguna</label>
-                                    <input type="text" class="form-control" id="nama_pengguna" name="nama_pengguna" required>
+                                    <label for="name" class="form-label">Nama Pengguna</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="alamat" class="form-label">Alamat</label>
@@ -230,8 +230,8 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="edit_nama_pengguna" class="form-label">Nama Pengguna</label>
-                                    <input type="text" class="form-control" id="edit_nama_pengguna" name="nama_pengguna" required>
+                                    <label for="edit_name" class="form-label">Nama Pengguna</label>
+                                    <input type="text" class="form-control" id="edit_name" name="name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="alamat" class="form-label">Alamat</label>
@@ -272,7 +272,7 @@
                     var url = "{{ route('admin.datauser.edit', ':id') }}".replace(':id', userId);
 
                     $.get(url, function (data) {
-                        $('#edit_nama_pengguna').val(data.nama_pengguna);
+                        $('#edit_name').val(data.name);
                         $('#edit_alamat').val(data.alamat);
                         $('#edit_email').val(data.email);
                         $('#edit_no_telepon').val(data.no_telepon);

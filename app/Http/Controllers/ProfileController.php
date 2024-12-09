@@ -18,13 +18,15 @@ class ProfileController extends Controller
         
         // Mendapatkan data antrean yang akan datang (tanggal kedatangan >= sekarang)
         $antrean = Antrean::where('user_id', $userId)
-            ->where('tanggal_kedatangan', '>=', $tanggalSekarang) // Antrean yang akan datang (tanggal kedatangan >= sekarang)
+            
+            -> where('status_antrean', 'Dalam Antrean')
             ->with('layanan')
             ->get();
         
         // Mendapatkan riwayat antrean yang sudah lewat (tanggal kedatangan < sekarang)
         $historyAntrean = Antrean::where('user_id', $userId)
-            ->where('tanggal_kedatangan', '<', $tanggalSekarang) // Antrean yang sudah lewat (tanggal kedatangan < sekarang)
+
+            -> where('status_antrean', 'Selesai')
             ->with('layanan')
             ->get();
 
@@ -54,7 +56,6 @@ class ProfileController extends Controller
         // Update data pengguna
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->nama_pengguna = $request->nama_pengguna;
         $user->alamat = $request->alamat;
         $user->no_telepon = $request->no_telepon;
 

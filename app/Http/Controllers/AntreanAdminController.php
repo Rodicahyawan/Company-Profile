@@ -106,7 +106,7 @@ class AntreanAdminController extends Controller
     {
         // Validasi inputan
         $request->validate([
-            'id_pengguna' => 'required|integer|exists:pengguna,id_pengguna', // Validasi untuk id_pengguna
+            'user_id' => 'required|integer|exists:users,user_id', // Validasi untuk user_id
             'nik' => 'required|string|max:16',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -123,9 +123,9 @@ class AntreanAdminController extends Controller
             'tanggal_kedatangan' => 'required|date',
         ]);
 
-        // Mengambil nama pasien berdasarkan id_pengguna
-        $pengguna = Pengguna::find($request->id_pengguna);
-        $namaPasien = $pengguna ? $pengguna->nama_pengguna : 'Nama Tidak Ditemukan';
+        // Mengambil nama pasien berdasarkan user_id
+        $user = User::find($request->user_id);
+        $namaPasien = $user ? $user->name : 'Nama Tidak Ditemukan';
 
         // Hitung nomor antrean berdasarkan tanggal kedatangan
         $tanggalKedatangan = $request->tanggal_kedatangan;
@@ -134,9 +134,9 @@ class AntreanAdminController extends Controller
 
         // Simpan data ke database
         AdminAntrean::create([
-            'id_pengguna' => $request->id_pengguna,
+            'user_id' => $request->user_id,
             'no_antrean' => $noAntrean, // Nomor antrean otomatis
-            'nama_pasien' => $namaPasien, // Simpan nama pasien berdasarkan id_pengguna
+            'nama_pasien' => $namaPasien, // Simpan nama pasien berdasarkan user_id
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'keluhan' => $request->keluhan,

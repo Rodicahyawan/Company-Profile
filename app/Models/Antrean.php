@@ -22,9 +22,10 @@ class Antrean extends Model
         'tanggal_lahir',
         'jenis_kelamin',
         'keluhan',
-        'layanan_id',
+        'jenis_layanan',
         'tanggal_kedatangan',
         'status_antrean',
+        'layanan_id',
         'nik'
     ];
 
@@ -46,8 +47,9 @@ class Antrean extends Model
         return ucfirst($value); // Menambahkan format kapitalisasi untuk status
     }
 
+    // Relasi ke tabel layanan
     public function layanan()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id');
+        return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan');
     }
 }

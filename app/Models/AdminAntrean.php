@@ -14,7 +14,7 @@ class AdminAntrean extends Model
 
     // Tentukan kolom yang dapat diisi (mass assignment)
     protected $fillable = [
-        'id_pengguna',
+        'user_id',
         'id_antrean',
         'no_antrean',
         'nama_pasien',

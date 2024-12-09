@@ -13,6 +13,8 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\AntreanController;
 use App\Http\Controllers\AntreanAdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\KelolaUlasanController;
 
 //ROUTE ADMIN
 // LOGIN
@@ -51,6 +53,8 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
 
         // KELOLA ULASAN
         Route::get('/admin/ulasan', function () {return view('admin.ulasan_admin');});
+        Route::get('/admin/ulasan', [KelolaUlasanController::class, 'index'])->middleware(['auth', 'check.role:admin']);
+        
 
         // KELOLA DATA PENGUNJUNG
         Route::get('/admin/datauser', [UserManagementController::class, 'index'])->name('admin.datauser.index');
@@ -77,6 +81,8 @@ Route::middleware('auth')->group(function () {
     // Memperbarui data profil
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/antrean/{id_antrean}/batalkan', [AntreanController::class, 'batalkan'])->name('antrean.batalkan');
+    Route::patch('/antrean/{id_antrean}/selesai', [AntreanController::class, 'markAsSelesai'])->name('antrean.selesai');
+
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -112,5 +118,6 @@ Route::get('/ulasan', function () {
     return view('user.ulasan');
 })->name('user.ulasan');
 Route::get('/homepage', [LayananControllerUser::class, 'homepage'])->name('user.homepage');
+Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
 
 

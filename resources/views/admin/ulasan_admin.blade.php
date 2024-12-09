@@ -125,7 +125,7 @@
                 <input type="text" class="form-control" placeholder="Cari ulasan">
             </div>
         
-            <!-- Table -->
+            <!-- Tabel Ulasan -->
             <table class="table">
                 <thead>
                     <tr>
@@ -135,33 +135,38 @@
                         <th>Rating</th>
                         <th>Jenis Layanan</th>
                         <th>Ulasan</th>
-                        <th>Aksi</th>
+                        <th>Status</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>
-                            <div class="rating">
-                              <span class="line-md--star-filled"></span>
-                              <span class="line-md--star-filled"></span>
-                              <span class="line-md--star-filled"></span>
-                              <span class="line-md--star-filled"></span>
-                              <span class="line-md--star-filled"></span>
-                            </div>
-                          </td>                          
-                        <td>Tambal Gigi</td>
-                        <td>Pelayanan tambal gigi sangat memuaskan! Dokternya ramah, profesional, dan hasil tambalannya rapi tanpa rasa sakit.</td>
-                        <td>
-                            <button class="btn-tampilkan-ulasan">Tampilkan Ulasan</button>
+                    @foreach ($ulasans as $ulasan)
+                        <tr>
+                            <td>{{ $ulasan->id_ulasan }}</td>
+                            <td>{{ $ulasan->user_id }}</td>
+                            <td>{{ $ulasan->nama_pasien }}</td>
+                            <td>
+                                <div class="rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <span class="{{ $i <= $ulasan->rating ? 'line-md--star-filled' : 'line-md--star-empty' }}"></span>
+                                    @endfor
+                                </div>
+                            </td>
+                            <td>{{ $ulasan->jenis_layanan }}</td>
+                            <td>{{ $ulasan->ulasan }}</td>
+                            <td>
+                            <button 
+                                class="btn-tampilkan-ulasan" 
+                                style="background-color: {{ $ulasan->status === 'Disembunyikan' ? '#FF8A00' : '#009A0F' }};">
+                                {{ $ulasan->status }}
+                            </button>
                         </td>
-                    </tr>
-
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-                    <!-- Tambahkan baris lainnya sesuai kebutuhan -->
+                        </tr>
+                    @endforeach
                 </tbody>
-            </table>         
+            </table>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

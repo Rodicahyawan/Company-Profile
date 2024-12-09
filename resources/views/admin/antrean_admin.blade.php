@@ -138,7 +138,7 @@
                         @else
                             @foreach($antreanHariIni as $antrean)
                                 <tr>
-                                    <td>{{ $antrean->id_pengguna }}</td>
+                                    <td>{{ $antrean->user_id }}</td>
                                     <td>{{ $antrean->id_antrean }}</td>
                                     <td>{{ $antrean->no_antrean }}</td>
                                     <td>{{ $antrean->nama_pasien }}</td>
@@ -146,7 +146,7 @@
                                     <td>{{ \Carbon\Carbon::parse($antrean->tanggal_lahir)->format('d/m/Y') }}</td>
                                     <td>{{ $antrean->jenis_kelamin }}</td>
                                     <td>{{ $antrean->keluhan }}</td>
-                                    <td>{{ $antrean->layanan_id }}</td>
+                                    <td>{{ $antrean->layanan->jenis_layanan}}</td>
                                     <td>{{ \Carbon\Carbon::parse($antrean->tanggal_kedatangan)->format('d/m/Y') }}</td>
                                     <td>
                                         <!-- Status Button -->
@@ -258,7 +258,7 @@
                         @else
                             @foreach($antreanMendatang as $antrean)
                                 <tr>
-                                    <td>{{ $antrean->id_pengguna }}</td>
+                                    <td>{{ $antrean->user_id }}</td>
                                     <td>{{ $antrean->id_antrean }}</td>
                                     <td>{{ $antrean->no_antrean }}</td>
                                     <td>{{ $antrean->nama_pasien }}</td>
@@ -266,7 +266,7 @@
                                     <td>{{ \Carbon\Carbon::parse($antrean->tanggal_lahir)->format('d/m/Y') }}</td>
                                     <td>{{ $antrean->jenis_kelamin }}</td>
                                     <td>{{ $antrean->keluhan }}</td>
-                                    <td>{{ $antrean->jenis_layanan }}</td>
+                                    <td>{{ $antrean->layanan->jenis_layanan }}</td>
                                     <td>{{ \Carbon\Carbon::parse($antrean->tanggal_kedatangan)->format('d/m/Y') }}</td>
                                     <td>
                                         <form action="{{ route('updateStatusAntrean') }}" method="POST" style="display: inline;">
@@ -383,7 +383,7 @@
                                 <td>{{ \Carbon\Carbon::parse($antrean->tanggal_lahir)->format('d/m/Y') }}</td>
                                 <td>{{ $antrean->jenis_kelamin }}</td>
                                 <td>{{ $antrean->keluhan }}</td>
-                                <td>{{ $antrean->jenis_layanan }}</td>
+                                <td>{{ $antrean->layanan->jenis_layanan }}</td>
                                 <td>{{ \Carbon\Carbon::parse($antrean->tanggal_kedatangan)->format('d/m/Y') }}</td>
                                 <td>
                                     <button class="status-button-selesai">
@@ -445,12 +445,12 @@
                     <form id="formTambahAntrean" action="{{ route('antrean.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="id_pengguna" class="form-label">Nama Pasien</label>
-                            <select class="form-control" id="id_pengguna" name="id_pengguna" required>
+                            <label for="user_id" class="form-label">Nama Pasien</label>
+                            <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">-- Pilih Pasien --</option>
                                 @foreach ($pengguna as $user)
-                                    <option value="{{ $user->id_pengguna }}">
-                                        {{ $user->nama_pengguna }} (ID: {{ $user->id_pengguna }})
+                                    <option value="{{ $user->user_id }}">
+                                        {{ $user->name }} (ID: {{ $user->id }})
                                     </option>
                                 @endforeach
                             </select>

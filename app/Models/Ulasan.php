@@ -9,18 +9,27 @@ class Ulasan extends Model
 {
     use HasFactory;
 
-    // Tentukan kolom yang bisa diisi (mass assignable)
+    protected $table = 'ulasan'; // Nama tabel
+    protected $primaryKey = 'id_ulasan'; // Primary key
     protected $fillable = [
-        'user_id', 
-        'nama_pasien', 
-        'rating', 
-        'jenis_layanan', 
-        'ulasan'
+        'user_id',
+        'nama_pasien',
+        'rating',
+        'jenis_layanan',
+        'ulasan',
+        'status',
     ];
 
-    // Relasi antara Ulasan dan User
+    public $timestamps = true;
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Relasi ke tabel antrean
+    public function antrean()
+    {
+        return $this->belongsTo(Antrean::class, 'user_id', 'user_id');
     }
 }

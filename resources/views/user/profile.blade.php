@@ -49,14 +49,22 @@
         <!-- Profile Icon -->
         <div class="profile-avatar">
             <span class="icon-user-avatar">
-                <img 
-                    src="{{ $user->foto_profil ? Storage::url($user->foto_profil) : asset('storage/images/default-profile.png') }}" 
-                    alt="User Avatar">
+                @if ($user->foto_profil)
+                    <img 
+                        src="{{ Storage::url($user->foto_profil) }}" 
+                        alt="User Avatar" 
+                        class="user-avatar-img">
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" class="user-avatar-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10" opacity="0.5"/>
+                        <path fill="currentColor" d="M16.807 19.011A8.46 8.46 0 0 1 12 20.5a8.46 8.46 0 0 1-4.807-1.489c-.604-.415-.862-1.205-.51-1.848C7.41 15.83 8.91 15 12 15s4.59.83 5.318 2.163c.35.643.093 1.433-.511 1.848M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6"/>
+                    </svg>
+                @endif
             </span>
-        </div>        
+        </div>  
         <!-- Account Information -->
         <div class="account-details">
-            <h4 class="account-username fw-bold">{{ $user->nama_pengguna }}</h4>
+            <h4 class="account-username fw-bold">{{ $user->name }}</h4>
             <p class="account-email">{{ $user->email }}</p>
             <p class="account-phone">{{ $user->no_telepon }}</p>
         </div>
@@ -94,7 +102,6 @@
             </div>
 
     <!-- Modal Edit Profil -->
-    <!-- Modal Edit Profil -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -113,10 +120,6 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nama_pengguna" class="form-label">Nama Pengguna</label>
-                            <input type="text" class="form-control" id="nama_pengguna" name="nama_pengguna" value="{{ old('nama_pengguna', $user->nama_pengguna) }}">
                         </div>
                         <div class="mb-3">
                             <label for="alamat" class="form-label">Alamat</label>
@@ -149,7 +152,6 @@
         </div>
     </div>
 
-    <!-- Content Sections -->
 <!-- Content Sections -->
 <div id="content-jadwal" class="content">
     <!-- Jadwal Saya Card -->
@@ -160,19 +162,54 @@
             <span class="patient-info">Nama Pasien: {{ $item->nama_pasien }}</span>
             <span class="service-info">Layanan: {{ $item->layanan->jenis_layanan }}</span>
             <span class="queue-info">
-                No Antrean: {{ $item->no_antrean }}<br />(Pastikan sudah berada di klinik pada pukul 16.00)
+                No Antrean: {{ $item->no_antrean }}
             </span>
         </div>
         <div class="card-actions">
-            <!-- Tombol untuk membuka modal batalkan -->
+            <!-- Tombol Aksi -->
             <button class="cancel-button" data-bs-toggle="modal" data-bs-target="#batalkanModal{{ $item->id_antrean }}">
                 <span class="button-text-large">Batalkan</span>
             </button>
-            <button class="done-button"  hidden>
+            <button class="done-button" data-bs-toggle="modal" data-bs-target="#selesaiModal{{ $item->id_antrean }}">
                 <span class="button-text-large-5">Selesai</span>
             </button>
         </div>
     </div>
+
+    <!-- Modal Konvirmasi Selesai -->
+    <div class="modal fade" id="selesaiModal{{ $item->id_antrean }}" tabindex="-1" aria-labelledby="selesaiModalLabel{{ $item->id_antrean }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selesaiModalLabel{{ $item->id_antrean }}">Konfirmasi Layanan Selesai</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin layanan untuk pasien <strong>{{ $item->nama_pasien }}</strong> pada tanggal 
+                    <strong>{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</strong> telah selesai dilakukan?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('antrean.selesai', $item->id_antrean) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-primary">Ya, Selesai</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <!-- Modal Batalkan Antrean -->
     <div class="modal fade" id="batalkanModal{{ $item->id_antrean }}" tabindex="-1" aria-labelledby="batalkanModalLabel{{ $item->id_antrean }}" aria-hidden="true">
@@ -208,26 +245,21 @@
             <span class="patient-info">Nama Pasien: {{ $item->nama_pasien }}</span>
             <span class="service-info">Layanan: {{ $item->layanan->jenis_layanan }}</span>
             <span class="queue-info">
-                No Antrean: {{ $item->no_antrean }}<br />(Pastikan sudah berada di klinik pada pukul 16.00)
+                No Antrean: {{ $item->no_antrean }}
             </span>
         </div>
         <div class="card-actions">
-            <!-- Form untuk membatalkan antrean -->
-            <form action="{{ route('antrean.batalkan', $item->id_antrean) }}" method="POST" style="display: inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="cancel-button"  hidden>
-                    <span class="button-text-large"  >Batalkan</span>
+            <!-- Tombol untuk membuka modal -->
+            <form action="#" data-bs-toggle="modal" data-bs-target="#beriUlasanModal">
+                <button type="submit" class="cancel-button">
+                    <span class="button-text-large">Beri Ulasan</span>
                 </button>
             </form>
-            <button class="done-button" hidden>
-                <span class="button-text-large-5" >Selesai</span>
-            </button>
         </div>
     </div>
     @endforeach
     @else
-    <p>Belum ada riwayat antrean.</p>
+    <p>Belum ada riwayat layanan.</p>
     @endif
 </div>
 
@@ -277,6 +309,57 @@
         }
 
     </script>
+
+    <!-- Modal untuk Beri Ulasan -->
+<div class="modal fade" id="beriUlasanModal" tabindex="-1" aria-labelledby="beriUlasanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="beriUlasanModalLabel">Beri Ulasan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form Ulasan -->
+                <form action="{{ route('ulasan.store') }}" method="POST">
+                    @csrf
+                    <!-- Hidden input untuk ID Antrean -->
+                    <input type="hidden" id="idAntreanInput" name="id_antrean" value="{{ $item->id }}"> <!-- Mengambil ID Antrean -->
+
+                    <!-- Rating -->
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <div class="stars">
+                            <input type="radio" name="rating" id="star5" value="5" />
+                            <label for="star5" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star4" value="4" />
+                            <label for="star4" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star3" value="3" />
+                            <label for="star3" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star2" value="2" />
+                            <label for="star2" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star1" value="1" />
+                            <label for="star1" class="star">&#9733;</label>
+                        </div>
+                    </div>
+
+                    <!-- Ulasan -->
+                    <div class="mb-3">
+                        <label for="ulasan" class="form-label">Ulasan</label>
+                        <textarea class="form-control" id="ulasan" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <!-- Footer -->
     <div class="footer">
