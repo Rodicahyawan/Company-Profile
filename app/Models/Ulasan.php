@@ -30,6 +30,7 @@ class Ulasan extends Model
     // Relasi ke tabel antrean
     public function antrean()
     {
-        return $this->belongsTo(Antrean::class, 'user_id', 'user_id');
+        return $this->belongsTo(Antrean::class, 'antrean_id', 'user_id', 'user_id');
     }
+    
 }

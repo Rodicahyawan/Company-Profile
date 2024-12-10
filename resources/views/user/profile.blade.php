@@ -155,6 +155,9 @@
 <!-- Content Sections -->
 <div id="content-jadwal" class="content">
     <!-- Jadwal Saya Card -->
+    @if($antrean->isEmpty())
+    <p>Saat ini anda belum mempunyai janji temu</p>
+@else
     @foreach($antrean as $item)
     <div class="jadwal-card">
         <div class="card-details">
@@ -234,6 +237,8 @@
         </div>
     </div>
     @endforeach
+    @endif
+    
 </div>
 
 <div id="content-histori" class="content">
@@ -259,11 +264,9 @@
     </div>
     @endforeach
     @else
-    <p>Belum ada riwayat layanan.</p>
+    <p>Belum ada riwayat layanan</p>
     @endif
 </div>
-
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -311,53 +314,52 @@
     </script>
 
     <!-- Modal untuk Beri Ulasan -->
-<div class="modal fade" id="beriUlasanModal" tabindex="-1" aria-labelledby="beriUlasanModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="beriUlasanModalLabel">Beri Ulasan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Form Ulasan -->
-                <form action="{{ route('ulasan.store') }}" method="POST">
-                    @csrf
-                    <!-- Hidden input untuk ID Antrean -->
-                    <input type="hidden" id="idAntreanInput" name="id_antrean" value="{{ $item->id }}"> <!-- Mengambil ID Antrean -->
-
-                    <!-- Rating -->
-                    <div class="mb-3">
-                        <label for="rating" class="form-label">Rating</label>
-                        <div class="stars">
-                            <input type="radio" name="rating" id="star5" value="5" />
-                            <label for="star5" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star4" value="4" />
-                            <label for="star4" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star3" value="3" />
-                            <label for="star3" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star2" value="2" />
-                            <label for="star2" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star1" value="1" />
-                            <label for="star1" class="star">&#9733;</label>
+    <div class="modal fade" id="beriUlasanModal" tabindex="-1" aria-labelledby="beriUlasanModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="beriUlasanModalLabel">Beri Ulasan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form Ulasan -->
+                    <form action="{{ route('ulasan.store') }}" method="POST">
+                        @csrf
+                        <!-- Hidden input untuk ID Antrean -->
+                      
+                        <!-- Rating -->
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <div class="stars">
+                                <input type="radio" name="rating" id="star5" value="5" />
+                                <label for="star5" class="star">&#9733;</label>
+                                <input type="radio" name="rating" id="star4" value="4" />
+                                <label for="star4" class="star">&#9733;</label>
+                                <input type="radio" name="rating" id="star3" value="3" />
+                                <label for="star3" class="star">&#9733;</label>
+                                <input type="radio" name="rating" id="star2" value="2" />
+                                <label for="star2" class="star">&#9733;</label>
+                                <input type="radio" name="rating" id="star1" value="1" />
+                                <label for="star1" class="star">&#9733;</label>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Ulasan -->
-                    <div class="mb-3">
-                        <label for="ulasan" class="form-label">Ulasan</label>
-                        <textarea class="form-control" id="ulasan" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
-                    </div>
+                        <!-- Ulasan -->
+                        <div class="mb-3">
+                            <label for="ulasan" class="form-label">Ulasan</label>
+                            <textarea class="form-control" id="ulasan" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
+                        </div>
 
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
-                    </div>
-                </form>
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 

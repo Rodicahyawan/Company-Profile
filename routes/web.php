@@ -54,7 +54,8 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
         // KELOLA ULASAN
         Route::get('/admin/ulasan', function () {return view('admin.ulasan_admin');});
         Route::get('/admin/ulasan', [KelolaUlasanController::class, 'index'])->middleware(['auth', 'check.role:admin']);
-        
+        Route::post('/admin/ulasan/{id}/update-status', [KelolaUlasanController::class, 'updateStatus'])->name('ulasan.updateStatus');
+
 
         // KELOLA DATA PENGUNJUNG
         Route::get('/admin/datauser', [UserManagementController::class, 'index'])->name('admin.datauser.index');

@@ -151,22 +151,56 @@
                                     @endfor
                                 </div>
                             </td>
-                            <td>{{ $ulasan->jenis_layanan }}</td>
+                            <td>{{ $ulasan->antrean->layanan->jenis_layanan ?? 'Tidak Tersedia' }}</td>
+
+
                             <td>{{ $ulasan->ulasan }}</td>
                             <td>
-                            <button 
-                                class="btn-tampilkan-ulasan" 
+                            <button class="btn-tampilkan-ulasan" data-bs-toggle="modal" data-bs-target="#editStatusModal-{{ $ulasan->id_ulasan }}"
                                 style="background-color: {{ $ulasan->status === 'Disembunyikan' ? '#FF8A00' : '#009A0F' }};">
                                 {{ $ulasan->status }}
                             </button>
+                            <!-- Modal untuk edit status -->
+                            <div class="modal fade" id="editStatusModal-{{ $ulasan->id_ulasan }}" tabindex="-1" aria-labelledby="editStatusLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editStatusLabel">Edit Status Ulasan</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST" action="{{ route('ulasan.updateStatus', $ulasan->id_ulasan) }}">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <p>Pilih status untuk ulasan ini:</p>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status" value="Ditampilkan" 
+                                                        id="tampilkan-{{ $ulasan->id_ulasan }}" {{ $ulasan->status === 'Ditampilkan' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="tampilkan-{{ $ulasan->id_ulasan }}">
+                                                        Tampilkan Ulasan
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status" value="Disembunyikan" 
+                                                        id="sembunyikan-{{ $ulasan->id_ulasan }}" {{ $ulasan->status === 'Disembunyikan' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="sembunyikan-{{ $ulasan->id_ulasan }}">
+                                                        Sembunyikan Ulasan
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
