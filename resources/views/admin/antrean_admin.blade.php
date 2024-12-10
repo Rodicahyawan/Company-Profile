@@ -94,8 +94,8 @@
         <div class="content bg-main p-4 flex-grow-1">
             <div class="header bg-white shadow-sm p-3 mb-4 d-flex align-items-center">
                 <div class="user-info text-start" style="padding-right: 20px;">
-                    <span class="admin-name d-block">Admin</span>
-                    <span class="admin-email">admin101@gmail.com</span>
+                    <span class="welcome d-block">Selamat Datang 👋</span>
+                    <span class="role">Administrator</span>
                 </div>
             </div>
 
@@ -449,7 +449,7 @@
                             <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">-- Pilih Pasien --</option>
                                 @foreach ($pengguna as $user)
-                                    <option value="{{ $user->user_id }}">
+                                    <option value="{{ $user->id }}">
                                         {{ $user->name }} (ID: {{ $user->id }})
                                     </option>
                                 @endforeach
@@ -476,10 +476,10 @@
                         </div>
                         <div class="mb-3">
                             <label for="jenis_layanan" class="form-label">Jenis Layanan</label>
-                            <select class="form-control" id="jenis_layanan" name="jenis_layanan" required>
+                            <select class="form-control" id="jenis_layanan" name="layanan_id" required>
                                 <option value="">-- Pilih Layanan --</option>
                                 @foreach ($layanan as $item)
-                                    <option value="{{ $item->jenis_layanan }}">{{ $item->jenis_layanan }}</option>
+                                    <option value="{{ $item->id_layanan }}">{{ $item->jenis_layanan }}</option>
                                 @endforeach
                                 <option value="Lainnya">Lainnya</option> <!-- Tambahkan opsi "Lainnya" -->
                             </select>

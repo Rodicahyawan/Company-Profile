@@ -110,8 +110,8 @@
         <div class="content bg-main p-4 flex-grow-1">
             <div class="header bg-white shadow-sm p-3 mb-4 d-flex align-items-center">
                 <div class="user-info text-start" style="padding-right: 20px;">
-                    <span class="admin-name d-block">Admin</span>
-                    <span class="admin-email">admin101@gmail.com</span>
+                    <span class="welcome d-block">Selamat Datang 👋</span>
+                    <span class="role">Administrator</span>
                 </div>
             </div>
             

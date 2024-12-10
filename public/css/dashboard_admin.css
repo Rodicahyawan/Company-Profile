@@ -206,13 +206,13 @@ body {
     padding-right: 40px; /* Add padding to the right */
 }
 
-.admin-name {
+.welcome {
     font-size: 16px;
     font-weight: bold;
     color: #1F1F1F;
 }
 
-.admin-email {
+.role {
     font-size: 14px;
     color: #4B4B4B;
 }

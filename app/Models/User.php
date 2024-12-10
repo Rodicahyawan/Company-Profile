@@ -30,9 +30,12 @@ class User extends Authenticatable
         return $this->hasMany(Antrean::class, 'user_id');
     }
 
+
+    
     public function ulasan()
     {
         return $this->hasMany(Ulasan::class, 'user_id');
     }
+
 
 }

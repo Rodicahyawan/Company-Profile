@@ -190,7 +190,7 @@ body {
     mask-size: 100% 100%;
   }
 
-.header {
+  .header {
     background-color: #FFFFFF;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     padding: 0.5rem 1rem; /* Adjust padding as needed */
@@ -206,13 +206,13 @@ body {
     padding-right: 40px; /* Add padding to the right */
 }
 
-.admin-name {
+.welcome {
     font-size: 16px;
     font-weight: bold;
     color: #1F1F1F;
 }
 
-.admin-email {
+.role {
     font-size: 14px;
     color: #4B4B4B;
 }

@@ -104,24 +104,16 @@ class AntreanAdminController extends Controller
     // Menyimpan data antrean baru
     public function store(Request $request)
     {
-        // Validasi inputan
-        $request->validate([
-            'user_id' => 'required|integer|exists:users,user_id', // Validasi untuk user_id
-            'nik' => 'required|string|max:16',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'keluhan' => 'nullable|string',
-            'jenis_layanan' => [
-                'required',
-                'string',
-                function ($attribute, $value, $fail) {
-                    if (!Layanan::where('jenis_layanan', $value)->exists() && $value !== 'Lainnya') {
-                        $fail('Jenis layanan tidak valid.');
-                    }
-                },
-            ],
-            'tanggal_kedatangan' => 'required|date',
-        ]);
+
+        // // Validasi inputan
+        // $request->validate([
+        //     'user_id' => 'required|integer|exists:users,id', // Validasi untuk user_id
+        //     'nik' => 'required|string|max:16',
+        //     'tanggal_lahir' => 'required|date',
+        //     'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+        //     'keluhan' => 'nullable|string',
+        //     'tanggal_kedatangan' => 'required|date',
+        // ]);
 
         // Mengambil nama pasien berdasarkan user_id
         $user = User::find($request->user_id);
@@ -132,15 +124,16 @@ class AntreanAdminController extends Controller
         $jumlahAntreanHariIni = AdminAntrean::whereDate('tanggal_kedatangan', $tanggalKedatangan)->count();
         $noAntrean = $jumlahAntreanHariIni + 1;
 
+
         // Simpan data ke database
-        AdminAntrean::create([
+        Antrean::create([
             'user_id' => $request->user_id,
             'no_antrean' => $noAntrean, // Nomor antrean otomatis
             'nama_pasien' => $namaPasien, // Simpan nama pasien berdasarkan user_id
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'keluhan' => $request->keluhan,
-            'jenis_layanan' => $request->jenis_layanan,
+            'layanan_id' => $request->layanan_id,
             'tanggal_kedatangan' => $tanggalKedatangan,
             'status_antrean' => 'Dalam Antrean', // Status otomatis "Dalam Antrean"
             'nik' => $request->nik,

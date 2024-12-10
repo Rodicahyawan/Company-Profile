@@ -243,30 +243,75 @@
 
 <div id="content-histori" class="content">
     @if($historyAntrean->isNotEmpty())
-    @foreach($historyAntrean as $item)
-    <div class="jadwal-card">
-        <div class="card-details">
-            <span class="date-info">{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</span>
-            <span class="patient-info">Nama Pasien: {{ $item->nama_pasien }}</span>
-            <span class="service-info">Layanan: {{ $item->layanan->jenis_layanan }}</span>
-            <span class="queue-info">
-                No Antrean: {{ $item->no_antrean }}
-            </span>
-        </div>
-        <div class="card-actions">
-            <!-- Tombol untuk membuka modal -->
-            <form action="#" data-bs-toggle="modal" data-bs-target="#beriUlasanModal">
-                <button type="submit" class="cancel-button">
+        @foreach($historyAntrean as $item)
+        <div class="jadwal-card">
+            <div class="card-details">
+                <span class="date-info">{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</span>
+                <span class="patient-info">Nama Pasien: {{ $item->nama_pasien }}</span>
+                <span class="service-info">Layanan: {{ $item->layanan->jenis_layanan }}</span>
+                <span class="queue-info">
+                    No Antrean: {{ $item->no_antrean }}
+                </span>
+            </div>
+            <div class="card-actions">
+                <!-- Tombol untuk membuka modal -->
+                <button type="button" class="cancel-button" data-bs-toggle="modal" data-bs-target="#beriUlasanModal-{{ $item->id }}">
                     <span class="button-text-large">Beri Ulasan</span>
                 </button>
-            </form>
+            </div>
         </div>
-    </div>
-    @endforeach
+        <!-- Modal untuk Beri Ulasan -->
+        <div class="modal fade" id="beriUlasanModal-{{ $item->id }}" tabindex="-1" aria-labelledby="beriUlasanModalLabel-{{ $item->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="beriUlasanModalLabel-{{ $item->id }}">Beri Ulasan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('ulasan.store') }}" method="POST">
+                            @csrf
+                            <!-- Input tersembunyi untuk Layanan ID dan Antrean ID -->
+                            <input type="hidden" name="layanan_id" value="{{ $item->layanan->id_layanan }}">
+                            <!-- Rating -->
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <div class="stars">
+                                    <input type="radio" name="rating" id="star5-{{ $item->id }}" value="5">
+                                    <label for="star5-{{ $item->id }}" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star4-{{ $item->id }}" value="4">
+                                    <label for="star4-{{ $item->id }}" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star3-{{ $item->id }}" value="3">
+                                    <label for="star3-{{ $item->id }}" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star2-{{ $item->id }}" value="2">
+                                    <label for="star2-{{ $item->id }}" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star1-{{ $item->id }}" value="1">
+                                    <label for="star1-{{ $item->id }}" class="star">&#9733;</label>
+                                </div>
+                            </div>
+
+                            <!-- Ulasan -->
+                            <div class="mb-3">
+                                <label for="ulasan-{{ $item->id }}" class="form-label">Ulasan</label>
+                                <textarea class="form-control" id="ulasan-{{ $item->id }}" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
+                            </div>
+
+                            <!-- Footer Modal -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     @else
-    <p>Belum ada riwayat layanan</p>
+        <p>Belum ada riwayat layanan</p>
     @endif
 </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -313,53 +358,7 @@
 
     </script>
 
-    <!-- Modal untuk Beri Ulasan -->
-    <div class="modal fade" id="beriUlasanModal" tabindex="-1" aria-labelledby="beriUlasanModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="beriUlasanModalLabel">Beri Ulasan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form Ulasan -->
-                    <form action="{{ route('ulasan.store') }}" method="POST">
-                        @csrf
-                        <!-- Hidden input untuk ID Antrean -->
-                      
-                        <!-- Rating -->
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">Rating</label>
-                            <div class="stars">
-                                <input type="radio" name="rating" id="star5" value="5" />
-                                <label for="star5" class="star">&#9733;</label>
-                                <input type="radio" name="rating" id="star4" value="4" />
-                                <label for="star4" class="star">&#9733;</label>
-                                <input type="radio" name="rating" id="star3" value="3" />
-                                <label for="star3" class="star">&#9733;</label>
-                                <input type="radio" name="rating" id="star2" value="2" />
-                                <label for="star2" class="star">&#9733;</label>
-                                <input type="radio" name="rating" id="star1" value="1" />
-                                <label for="star1" class="star">&#9733;</label>
-                            </div>
-                        </div>
-
-                        <!-- Ulasan -->
-                        <div class="mb-3">
-                            <label for="ulasan" class="form-label">Ulasan</label>
-                            <textarea class="form-control" id="ulasan" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
-                        </div>
-
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
 

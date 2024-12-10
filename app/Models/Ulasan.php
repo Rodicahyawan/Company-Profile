@@ -18,6 +18,7 @@ class Ulasan extends Model
         'jenis_layanan',
         'ulasan',
         'status',
+        'layanan_id',
     ];
 
     public $timestamps = true;
@@ -30,7 +31,12 @@ class Ulasan extends Model
     // Relasi ke tabel antrean
     public function antrean()
     {
-        return $this->belongsTo(Antrean::class, 'antrean_id', 'user_id', 'user_id');
+        return $this->belongsTo(Antrean::class, 'antrean_id', 'id_antrean', 'user_id');
     }
-    
+
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan');
+    }
+        
 }

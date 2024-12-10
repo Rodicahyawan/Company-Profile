@@ -21,7 +21,7 @@ class AdminAntrean extends Model
         'tanggal_lahir',
         'jenis_kelamin',
         'keluhan',
-        'jenis_layanan',
+        'layanan_id',
         'tanggal_kedatangan',
         'status_antrean',
         'nik',
@@ -33,5 +33,13 @@ class AdminAntrean extends Model
     // Tentukan tipe data primary key jika menggunakan UUID atau tipe lainnya
     protected $keyType = 'int'; // Jika menggunakan integer
 
-    public $timestamps = false;  // Nonaktifkan otomatisasi timestamp
+    public $timestamps = false;
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan');
+    }  // Nonaktifkan otomatisasi timestamp
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

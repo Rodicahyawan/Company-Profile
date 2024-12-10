@@ -120,5 +120,7 @@ Route::get('/ulasan', function () {
 })->name('user.ulasan');
 Route::get('/homepage', [LayananControllerUser::class, 'homepage'])->name('user.homepage');
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+Route::get('/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
+Route::get('/ulasan', [UlasanController::class, 'index'])->name('user.ulasan');
 
 

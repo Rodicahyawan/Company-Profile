@@ -10,20 +10,26 @@ class CreateUlasanTable extends Migration
     {
         Schema::create('ulasan', function (Blueprint $table) {
             $table->increments('id_ulasan');
-            $table->unsignedBigInteger('user_id')->nullable();  // Ubah id_pengguna menjadi user_id
+            $table->unsignedBigInteger('user_id')->nullable(); // Referensi ke tabel users
             $table->string('nama_pasien', 255);
             $table->integer('rating')->unsigned();
             $table->string('jenis_layanan', 100)->nullable();
             $table->text('ulasan')->nullable();
+            $table->unsignedInteger('layanan_id')->nullable(); // Sesuaikan tipe data dengan tabel layanan
             $table->timestamps();
-
-            // Ubah referensi ke foreign key user_id
+        
+            // Foreign key ke tabel users
             $table->foreign('user_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade'); // Menghapus data antrean jika user dihapus
-
-        });
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+        
+            // Foreign key ke tabel layanan
+            $table->foreign('layanan_id')
+                ->references('id_layanan') // Sesuaikan dengan nama kolom pada tabel layanan
+                ->on('layanan')
+                ->onDelete('cascade');
+        });        
     }
 
     public function down()

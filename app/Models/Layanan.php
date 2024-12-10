@@ -29,4 +29,9 @@ class Layanan extends Model
     {
         return $this->hasMany(Antrean::class, 'layanan_id');
     }
+
+    public function ulasan()
+    {
+        return $this->hasMany(Ulasan::class, 'layanan_id');
+    }
 }
