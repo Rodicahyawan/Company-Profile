@@ -12,7 +12,7 @@ class LayananController extends Controller
     public function index()
     {
         // Mengambil semua data layanan dari model Layanan
-        $layanan = Layanan::all();
+        $layanan = Layanan::whereNotIn('jenis_layanan', ['Konsultasi', 'Kontrol', 'Lainnya'])->get();
 
         // Mengirim data layanan ke view
         return view('admin.layanan_admin', compact('layanan'));
@@ -115,7 +115,7 @@ class LayananController extends Controller
         // Hapus data layanan dari database
         $layanan->delete();
     
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil dihapus.');
+        return redirect()->back()->with('success', 'Layanan berhasil dihapus.');
     }
     
 

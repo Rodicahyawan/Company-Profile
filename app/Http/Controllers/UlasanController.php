@@ -44,7 +44,7 @@ class UlasanController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('user.ulasan', compact('ulasans'));
+        return view('user.ulasan', compact('ulasans'));   
     }
 
 

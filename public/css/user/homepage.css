@@ -130,6 +130,10 @@ body {
         height: 60px;
     }
 
+    .logo{
+        font-size: 18px;
+    }
+
     .nav-menu {
         display: flex;
         flex-direction: column;
@@ -167,7 +171,7 @@ body {
 
     .mobile-menu-toggle {
         display: block;
-        font-size: 24px;
+        font-size: 18px;
         cursor: pointer;
         color: #6022C3;
     }
@@ -568,12 +572,62 @@ body {
         padding: 0 20px;
         gap: 20px;
     }
+    
     .gallery-caption {
-        font-size: 16px;
+        font-size: px;
+        color: #8E4CFF;
+        text-align: center;
+        margin-top: 16px;
     }
 }
 
-/* Style ulasan */
+/* Card Ulasan */
+.review-card {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    cursor: pointer;
+    height: 100%;
+    box-shadow: 0px 4px 12px rgba(215, 63, 238, 0.15);
+}
+
+/* Link untuk Card Ulasan */
+.review-card-link {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    border-radius: 16px;
+}
+
+/* Layout dengan Grid untuk Card Ulasan */
+.review-card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 card per baris */
+    gap: 32px;  /* Jarak antar card */
+    padding: 0 200px;  /* Padding 200px di sisi kiri dan kanan */
+    margin-top: 40px;
+}
+
+/* Efek Hover untuk Card */
+.review-card-link:hover .review-card {
+    transform: scale(1.05);
+}
+
+/* Isi Card */
+.review-card-body {
+    padding: 24px;
+}
+
+.review-card-text {
+    font-size: 16px;
+    color: #4B4B4B;
+}
+
+/* Style untuk Profil User */
 .profile-section {
     display: flex;
     align-items: center;
@@ -582,6 +636,15 @@ body {
 
 .profile-info {
     margin-left: 8px;
+}
+
+.profile-icon, .user-avatar-icon {
+    width: 64px;       /* Lebar sama untuk gambar dan ikon */
+    height: 64px;      /* Tinggi sama untuk gambar dan ikon */
+    border-radius: 50%; /* Membuat bulat */
+    object-fit: cover;  /* Mencegah distorsi */
+    margin-right: 10px; /* Spasi antar elemen */
+    color: #6022C3;
 }
 
 .username {
@@ -595,18 +658,6 @@ body {
     display: flex;
     align-items: center;
     margin: 6px 0;
-}
-
-.mingcute--user-4-fill {
-    width: 64px;
-    height: 64px;
-    background-color: #ddd;
-    border-radius: 50%;
-    display: inline-block;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='%23000' d='M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2M8.5 9.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m9.758 7.484A7.99 7.99 0 0 1 12 20a7.99 7.99 0 0 1-6.258-3.016C7.363 15.821 9.575 15 12 15s4.637.821 6.258 1.984'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: cover; /* atau gunakan 'contain' untuk ukuran proporsional */
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .emojione--star {
@@ -624,83 +675,71 @@ body {
     margin-bottom: 12px;
 }
 
-.review-card {
-    background-color: #FFFFFF;
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0px 4px 12px rgba(215, 63, 238, 0.15);
-    overflow: hidden;
-    transition: transform 0.2s;
-    cursor: pointer;
-    height: 100%;
-}
-
-.review-card-link {
-    text-decoration: none;
-    display: inline-block;
-    width: calc((100% - 80px) / 3); /* Mengatur agar 3 card per baris */
-    max-width: 100%;
-    flex-grow: 1;
-    transition: transform 0.2s;
-    border-radius: 16px;
-}
-
-.review-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 200px;
-    gap: 32px; /* Jarak antar card */
-    margin-top: 40px;
-    justify-content: center;
-}
-
-.review-card-link:hover .review-card {
-    box-shadow: 0px 4px 12px rgba(215, 63, 238, 0.25);
-    transform: scale(1.05);
-}
-
-.review-card-body {
-    padding: 24px;
-}
-
-.review-card-text {
-    font-size: 16px;
-    color: #4B4B4B;
-}
-
 /* Responsif untuk layar kecil */
 @media (max-width: 768px) {
-    .review-card-container {
-        gap: 24px;
-        padding: 0 20px;
+    .profile-section {
+        display: flex;
+        flex-direction: row; /* Elemen tetap sejajar horizontal */
+        align-items: center; /* Rata tengah secara vertikal */
+        margin-bottom: 16px;
     }
-    .review-card-link {
-        width: 100%; /* Card menjadi 1 kolom penuh pada layar kecil */
+    
+    .profile-icon, .user-avatar-icon {
+        width: 48px; /* Gambar lebih kecil */
+        height: 48px; /* Gambar lebih kecil */
+        margin-right: 12px; /* Memberikan jarak antara gambar dan konten */
     }
-    .review-card-body {
-        padding: 20px;
-    }
-    .jenis-layanan {
-        font-size: 14px;
-    }
-    .review-card-text {
-        font-size: 14px;
-    }
+
     .profile-info {
-        margin-left: 8px;
+        display: flex;
+        flex-direction: column; /* Membuat username dan rating diatur secara vertikal */
+        justify-content: flex-start; /* Menyusun elemen-elemen ke atas */
     }
+    
     .username {
-        font-size: 16px;
-        font-weight: bold;
-        color: #1F1F1F;
-        margin: 6px 0;
+        font-size: 16px; /* Ukuran teks lebih kecil */
+        margin-bottom: 4px; /* Memberikan jarak antara username dan rating */
     }
-    .mingcute--user-4-fill {
-        width: 56px;
-        height: 56px;
+    
+    .rating {
+        display: flex; 
+        gap: 4px; /* Jarak antar bintang */
+    }
+
+    .jenis-layanan {
+        font-size: 14px; /* Ukuran lebih kecil */
+        margin-bottom: 10px;
+    }
+
+    .review-card-container {
+        display: flex;
+        flex-direction: column; /* Semua card dalam satu kolom */
+        padding: 0 20px; /* Padding kiri-kanan lebih kecil */
+        gap: 24px; /* Jarak antar card lebih kecil */
+        margin-top: 24px;
+        justify-content: center; /* Pusatkan konten */
+    }
+
+    .review-card-link {
+        width: 100%; /* Card memenuhi lebar layar */
+        margin: 0 auto; /* Card tetap di tengah */
+    }
+
+    .review-card {
+        border-radius: 16px; /* Tetap mempertahankan sudut melengkung */
+        height: auto; /* Tinggi card menyesuaikan isi */
+        min-height: 200px;
+    }
+
+    .review-card-body {
+        padding: 20px; /* Padding dalam card lebih kecil */
+    }
+
+    .review-card-text {
+        font-size: 14px; /* Ukuran teks lebih kecil */
+        color: #4B4B4B;
     }
 }
-
 
 
 /* Style untuk section CTA */

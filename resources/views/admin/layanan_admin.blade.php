@@ -128,6 +128,7 @@
             </div>
                      
             <!-- Table -->
+            <div class="table-responsive-wrapper">
             <table class="table">
                 <thead>
                     <tr>
@@ -203,6 +204,7 @@
                     });
                 </script>
             </table>
+            </div>
             
             <!-- Modal Tambah Layanan -->
             <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">

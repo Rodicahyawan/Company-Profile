@@ -44,12 +44,17 @@ class Antrean extends Model
     // Jika ingin mengambil status antrean
     public function getStatusAntreanAttribute($value)
     {
-        return ucfirst($value); // Menambahkan format kapitalisasi untuk status
+        return ucfirst($value);
     }
 
     // Relasi ke tabel layanan
     public function layanan()
     {
         return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan');
+    }
+
+    public function ulasan()
+    {
+        return $this->hasMany(Ulasan::class, 'antrean_id');
     }
 }

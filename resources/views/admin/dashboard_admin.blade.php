@@ -147,45 +147,40 @@
             <br><br><br>
 
             <!-- Graph -->
-            <div class="chart-container">
-                <h3 class="text-dark chart-title">Statistik Riwayat Perawatan</h3>
-                <canvas id="perawatanChart"></canvas>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                var ctx = document.getElementById('perawatanChart').getContext('2d');
+<div class="chart-container">
+    <h3 class="text-dark chart-title">Statistik Riwayat Perawatan</h3>
+    <canvas id="perawatanChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('perawatanChart').getContext('2d');
 
-                // Data dari controller
-                var perawatanData = @json($perawatanBulanan);
-                var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    // Data dari controller
+    var perawatanData = @json($perawatanBulanan);
+    var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
-                // Tentukan bulan saat ini
-                var currentMonth = new Date().getMonth(); // Bulan dimulai dari 0 (Januari)
-                
-                // Reorder labels dan data berdasarkan bulan saat ini
-                var reorderedLabels = labels.slice(currentMonth).concat(labels.slice(0, currentMonth));
-                var reorderedData = perawatanData.slice(currentMonth).concat(perawatanData.slice(0, currentMonth));
+    // Data tanpa rotasi (langsung pakai urutan standar)
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels, // Tidak diubah, tetap urutan Januari - Desember
+            datasets: [{
+                label: 'Total Perawatan',
+                data: perawatanData, // Data tidak diubah, mengikuti urutan default
+                backgroundColor: '#6022C3'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
-                var myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: reorderedLabels,
-                        datasets: [{
-                            label: 'Total Perawatan',
-                            data: reorderedData,
-                            backgroundColor: '#6022C3'
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            </script>
         </div>
     </div>
 </body>

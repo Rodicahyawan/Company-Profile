@@ -257,6 +257,14 @@ h3 {
     align-items: center;
 }
 
+/* Wrapper for scrollable table */
+.table-responsive-wrapper {
+    overflow-x: auto; /* Memungkinkan scroll horizontal */
+    -webkit-overflow-scrolling: touch; /* Scroll lebih halus di perangkat sentuh */
+    margin-bottom: 16px; /* Tambahkan margin bawah */
+    width: 100%; /* Pastikan wrapper memenuhi lebar kontainer */
+}
+
 /* Styling untuk ikon search */
 .uil--search {
     position: absolute;

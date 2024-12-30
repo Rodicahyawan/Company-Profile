@@ -28,6 +28,7 @@ class ProfileController extends Controller
 
             -> where('status_antrean', 'Selesai')
             ->with('layanan')
+            ->orderBy('tanggal_kedatangan', 'desc')
             ->get();
 
             // dd([$antrean, $historyAntrean]);

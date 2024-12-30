@@ -29,7 +29,12 @@ class AntreanAdminController extends Controller
             ->paginate(10);
     
         $pengguna = User::all();
-        $layanan = Layanan::all(); // Ambil semua layanan
+        
+        $layananUtama = Layanan::whereNotIn('jenis_layanan', ['Konsultasi', 'Kontrol', 'Lainnya'])->get();
+        $layananTambahan = Layanan::whereIn('jenis_layanan', ['Konsultasi', 'Kontrol', 'Lainnya'])->get();
+
+        // Gabungkan layanan utama dan tambahan, dengan tambahan di bagian bawah
+        $layanan = $layananUtama->concat($layananTambahan);
     
         return view('admin.antrean_admin', compact('antreanHariIni', 'antreanMendatang', 'antreanSelesai', 'pengguna', 'layanan'));
     }

@@ -116,135 +116,42 @@
         <a href="{{ route('user.ulasan') }}" class="lihat-semua-button">Lihat Semua</a>
     </div>
 
-    <!-- Card -->
-    <div class="container-custom">
-        <div class="review-card-container">
-            <a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            <span class="mingcute--user-4-fill profile-icon"></span>
-                            <div class="profile-info">
-                                <p class="username">Angkasa Yudistira</p>
-                                <div class="rating">
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                </div>
+    <div class="review-card-container">
+    @foreach ($ulasans as $ulasan)
+        <a class="review-card-link">
+            <div class="review-card">
+                <div class="review-card-body">
+                    <div class="profile-section">
+                        @php
+                            // Ambil foto profil berdasarkan relasi user di tabel ulasan
+                            $userProfile = $ulasan->user->foto_profil ?? 'default-profile.png'; 
+                        @endphp
+
+                        @if (!empty($userProfile) && file_exists(storage_path('app/public/' . $userProfile)))
+                            <img src="{{ asset('storage/' . $userProfile) }}" alt="Foto Profil" class="profile-icon">
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" class="user-avatar-icon" viewBox="0 0 24 24" preserveAspectRatio="none">
+                                <path fill="currentColor" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10" opacity="0.5"/>
+                                <path fill="currentColor" d="M16.807 19.011A8.46 8.46 0 0 1 12 20.5a8.46 8.46 0 0 1-4.807-1.489c-.604-.415-.862-1.205-.51-1.848C7.41 15.83 8.91 15 12 15s4.59.83 5.318 2.163c.35.643.093 1.433-.511 1.848M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6"/>
+                            </svg>
+                        @endif
+
+                        <div class="profile-info">
+                            <p class="username">{{ $ulasan->nama_pasien }}</p>
+                            <div class="rating">
+                                @for ($i = 0; $i < $ulasan->rating; $i++)
+                                    <span class="emojione--star"></span> <!-- Bintang penuh -->
+                                @endfor
                             </div>
                         </div>
-                        <h5 class="jenis-layanan">Cabut Gigi</h5>
-                        <p class="review-card-text">Pelayanan tambal gigi di klinik ini sangat memuaskan! Dokternya ramah dan profesional, menjelaskan setiap prosedur dengan jelas, sehingga saya merasa nyaman dan tenang. Hasil tambalan gigi pun rapi dan tidak terasa sakit sama sekali.</p>
                     </div>
+                    <h5 class="jenis-layanan">{{ $ulasan->jenis_layanan }}</h5>
+                    <p class="review-card-text">{{ $ulasan->ulasan }}</p>
                 </div>
-            </a>
-            <a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            <span class="mingcute--user-4-fill profile-icon"></span>
-                            <div class="profile-info">
-                                <p class="username">Angkasa Yudistira</p>
-                                <div class="rating">
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="jenis-layanan">Cabut Gigi</h5>
-                        <p class="review-card-text">Pelayanan tambal gigi di klinik ini sangat memuaskan! Dokternya ramah dan profesional, menjelaskan setiap prosedur dengan jelas, sehingga saya merasa nyaman dan tenang. Hasil tambalan gigi pun rapi dan tidak terasa sakit sama sekali.</p>
-                    </div>
-                </div>
-            </a><a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            <span class="mingcute--user-4-fill profile-icon"></span>
-                            <div class="profile-info">
-                                <p class="username">Angkasa Yudistira</p>
-                                <div class="rating">
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="jenis-layanan">Cabut Gigi</h5>
-                        <p class="review-card-text">Pelayanan tambal gigi di klinik ini sangat memuaskan! Dokternya ramah dan profesional, menjelaskan setiap prosedur dengan jelas, sehingga saya merasa nyaman dan tenang. Hasil tambalan gigi pun rapi dan tidak terasa sakit sama sekali.</p>
-                    </div>
-                </div>
-            </a>
-            </a><a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            <span class="mingcute--user-4-fill profile-icon"></span>
-                            <div class="profile-info">
-                                <p class="username">Angkasa Yudistira</p>
-                                <div class="rating">
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="jenis-layanan">Cabut Gigi</h5>
-                        <p class="review-card-text">Pelayanan tambal gigi di klinik ini sangat memuaskan! Dokternya ramah dan profesional, menjelaskan setiap prosedur dengan jelas, sehingga saya merasa nyaman dan tenang. Hasil tambalan gigi pun rapi dan tidak terasa sakit sama sekali.</p>
-                    </div>
-                </div>
-            </a></a><a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            <span class="mingcute--user-4-fill profile-icon"></span>
-                            <div class="profile-info">
-                                <p class="username">Angkasa Yudistira</p>
-                                <div class="rating">
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="jenis-layanan">Cabut Gigi</h5>
-                        <p class="review-card-text">Pelayanan tambal gigi di klinik ini sangat memuaskan! Dokternya ramah dan profesional, menjelaskan setiap prosedur dengan jelas, sehingga saya merasa nyaman dan tenang. Hasil tambalan gigi pun rapi dan tidak terasa sakit sama sekali.</p>
-                    </div>
-                </div>
-            </a></a><a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            <span class="mingcute--user-4-fill profile-icon"></span>
-                            <div class="profile-info">
-                                <p class="username">Angkasa Yudistira</p>
-                                <div class="rating">
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                    <span class="emojione--star"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="jenis-layanan">Cabut Gigi</h5>
-                        <p class="review-card-text">Pelayanan tambal gigi di klinik ini sangat memuaskan! Dokternya ramah dan profesional, menjelaskan setiap prosedur dengan jelas, sehingga saya merasa nyaman dan tenang. Hasil tambalan gigi pun rapi dan tidak terasa sakit sama sekali.</p>
-                    </div>
-                </div>
-            </a>
-            <!-- Ulangi untuk card ulasan lainnya -->
-        </div>
-    </div>
+            </div>
+        </a>
+    @endforeach
+</div>
     
     <!-- Call to Action -->
     <div class="cta-section">

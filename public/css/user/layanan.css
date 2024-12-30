@@ -130,6 +130,10 @@ body {
         height: 60px;
     }
 
+    .logo{
+        font-size: 18px;
+    }
+
     .nav-menu {
         display: flex;
         flex-direction: column;
@@ -167,7 +171,7 @@ body {
 
     .mobile-menu-toggle {
         display: block;
-        font-size: 24px;
+        font-size: 18px;
         cursor: pointer;
         color: #6022C3;
     }
@@ -214,22 +218,21 @@ h3 {
 /* Style untuk link card agar memiliki lebar penuh */
 .card-link {
     text-decoration: none;
-    display: inline-block;
-    width: calc((100% - 80px) / 3); /* Mengatur agar 3 card per baris */
-    max-width: 100%;
-    flex-grow: 1;
+    display: block;
+    /* Mengatur lebar card agar 3 card per baris */
+    width: 100%;
+    box-sizing: border-box;
     transition: transform 0.2s;
     border-radius: 16px;
 }
 
-/* Atur tata letak Flexbox untuk card */
+/* Atur tata letak dengan CSS Grid */
 .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Membuat 3 kolom per baris */
     gap: 32px; /* Jarak antar card */
+    padding: 0 200px;
     margin-top: 40px;
-    justify-content: center;
 }
 
 .card-link:hover .card {
@@ -261,20 +264,25 @@ h3 {
 /* Responsif untuk layar kecil */
 @media (max-width: 768px) {
     .card-container {
-        gap: 24px;
-        padding: 0 20px;
+        grid-template-columns: 1fr; /* Card menjadi 1 kolom penuh pada layar kecil */
+        gap: 24px; /* Jarak antar card lebih kecil */
+        padding: 0 20px; /* Padding kiri-kanan lebih kecil */
     }
     .card-link {
-        width: 100%; /* Card menjadi 1 kolom penuh pada layar kecil */
+        width: 100%; /* Card memenuhi lebar layar */
+    }
+    .card {
+        border-radius: 16px; /* Tetap mempertahankan sudut melengkung */
+        height: auto; /* Tinggi card menyesuaikan isi */
     }
     .card-body {
-        padding: 20px;
+        padding: 20px; /* Ruang dalam card lebih kecil */
     }
     .card-title {
-        font-size: 18px;
+        font-size: 18px; /* Ukuran judul lebih kecil */
     }
     .card-text {
-        font-size: 14px;
+        font-size: 14px; /* Ukuran teks deskripsi lebih kecil */
     }
 }
 

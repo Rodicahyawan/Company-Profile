@@ -13,7 +13,11 @@ class AntreanController extends Controller
     public function index()
     {
         // Ambil daftar layanan dari database
-        $layanan = Layanan::all();
+        $layananUtama = Layanan::whereNotIn('jenis_layanan', ['Konsultasi', 'Kontrol', 'Lainnya'])->get();
+        $layananTambahan = Layanan::whereIn('jenis_layanan', ['Konsultasi', 'Kontrol', 'Lainnya'])->get();
+
+        // Gabungkan layanan utama dan tambahan, dengan tambahan di bagian bawah
+        $layanan = $layananUtama->concat($layananTambahan);
 
         // Ambil antrean jika diperlukan
         $antreans = Antrean::orderBy('tanggal_kedatangan', 'desc')->paginate(10);
@@ -34,8 +38,7 @@ class AntreanController extends Controller
             'keluhan' => 'nullable|string',
             'layanan_id' => 'required|exists:layanan,id_layanan',
             'tanggal_kedatangan' => 'required|date',
-        ]);
-        
+        ]);     
 
         // Cek apakah sudah ada antrean dengan NIK dan tanggal kedatangan yang sama
         $existingAntrean = Antrean::where('nik', $validated['nik'])
@@ -69,7 +72,6 @@ class AntreanController extends Controller
             'user_id' => auth()->id(),
         ]);
         
-
         return redirect()->route('user.janjitemu')->with('success', 'Janji temu berhasil dibuat!');
     }
 
@@ -81,7 +83,6 @@ class AntreanController extends Controller
 
         return redirect()->back()->with('success', 'Layanan telah selesai.');
     }
-
 
     public function batalkan($id_antrean)
     {
@@ -99,6 +100,5 @@ class AntreanController extends Controller
         // Jika antrean tidak ditemukan, redirect dengan pesan error
         return redirect()->back()->with('error', 'Antrean tidak ditemukan');
     }
-
 
 }

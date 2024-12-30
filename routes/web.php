@@ -16,9 +16,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\KelolaUlasanController;
 
-//ROUTE ADMIN
+// ROUTE ADMIN
 // LOGIN
-Route::get('/admin', function () {return view('admin.login_admin');})->name('login');
+// Route::get('/admin', function () {return view('admin.login_admin');})->name('login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
 Route::middleware(['auth', 'check.role:admin'])->group(function () {
         Route::get('/admin/dashboard', [AntreanAdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -67,50 +67,51 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
         Route::delete('/admin/datauser/{id}', [UserManagementController::class, 'destroy'])->name('admin.datauser.destroy');
     });
 
-//ROUTE USER (PENGUNJUNG)
-
-
+// ROUTE PENGUNJUNG
+// LOGIN
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-//contoh Halaman yang boleh diakses jika login
+// HALAMAN DENGAN AKSES LOGIN
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profil');
-  
-    // Memperbarui data profil
+    // UPDATE PROFIL
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/antrean/{id_antrean}/batalkan', [AntreanController::class, 'batalkan'])->name('antrean.batalkan');
     Route::patch('/antrean/{id_antrean}/selesai', [AntreanController::class, 'markAsSelesai'])->name('antrean.selesai');
-
-
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
+    // JANJI TEMU
     Route::post('/janji-temu', [AntreanController::class, 'store'])->name('user.janjiTemu.store');
     Route::get('/janji-temu', [AntreanController::class, 'index'])->name('user.janjiTemu.index');
     Route::get('/janji-temu', [AntreanController::class, 'index'])->name('user.janjitemu');
-
-
-
 });
 
+// HOMEPAGE
+Route::get('/homepage', [LayananControllerUser::class, 'homepage'])->name('user.homepage');
+
+// LAYANAN
 Route::get('/layanan', function () {return view('user.layanan');});
 Route::get('/layanan', [LayananControllerUser::class, 'index'])->name('layanan.index');
 Route::get('/layanan/{jenis_layanan}', [LayananControllerUser::class, 'show'])->name('layanan.show');
 
-
+//TENTANG
 Route::get('/tentang', [TentangControllerUser::class, 'index']);
 Route::get('/tentang', [TentangControllerUser::class, 'tentang'])->name('user.tentang');
 
+// KONTAK
 Route::get('/kontak', function () {
-    return view('user.kontak'); // Pastikan ini sesuai dengan path ke view Anda
-})->name('user.kontak'); // Menambahkan nama route
+    return view('user.kontak'); 
+})->name('user.kontak');
+
+// GALERI
 Route::get('/galeri', function () {
     return view('user.galeri');
 })->name('user.galeri');
-
 Route::get('/galeri', [GaleriControllerUser::class, 'index'])->name('user.galeri');
+
+// SIGN UP
 Route::get('/register', function () {
     return view('user.signup_user');
 });
@@ -118,7 +119,6 @@ Route::get('/register', function () {
 Route::get('/ulasan', function () {
     return view('user.ulasan');
 })->name('user.ulasan');
-Route::get('/homepage', [LayananControllerUser::class, 'homepage'])->name('user.homepage');
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
 Route::get('/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
 Route::get('/ulasan', [UlasanController::class, 'index'])->name('user.ulasan');

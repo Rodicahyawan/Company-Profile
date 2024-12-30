@@ -120,12 +120,15 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3>Ulasan Pasien</h3>
             </div>
+
+            <!-- Searchbar -->
             <div class="mb-3 search-wrapper">
                 <span class="uil--search"></span>
-                <input type="text" class="form-control" placeholder="Cari ulasan">
+                <input id="searchInput" type="text" class="form-control" placeholder="Cari ulasan">
             </div>
         
             <!-- Tabel Ulasan -->
+            <div class="table-responsive-wrapper">
             <table class="table">
                 <thead>
                     <tr>
@@ -200,7 +203,36 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
+            <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.querySelector('.table tbody');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const rows = table.getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        const cell = cells[j];
+                        if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -131,6 +131,7 @@
         
            
             <!-- Table -->
+            <div class="table-responsive-wrapper">
             <table class="table">
                 <thead>
                     <tr>
@@ -163,6 +164,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
             <!-- Pagination Links -->
             <div class="d-flex justify-content-center mt-4">
                 {{ $galeri->links('pagination::bootstrap-4') }} <!-- Menggunakan tampilan pagination Bootstrap -->

@@ -19,7 +19,6 @@
     <!-- Navbar/Header -->
     @include('user.layout')
 
-
     <!-- Overlay untuk menu popup -->
     <div class="overlay"></div>
 
@@ -38,6 +37,13 @@
             document.querySelector('.overlay').style.display = 'none';
         });
     </script>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
         
     <!-- Judul -->
     <div class="judul d-flex justify-content-between align-items-center">
@@ -260,6 +266,7 @@
                 </button>
             </div>
         </div>
+        
         <!-- Modal untuk Beri Ulasan -->
         <div class="modal fade" id="beriUlasanModal-{{ $item->id }}" tabindex="-1" aria-labelledby="beriUlasanModalLabel-{{ $item->id }}" aria-hidden="true">
             <div class="modal-dialog">
@@ -357,11 +364,7 @@
         }
 
     </script>
-
     
-
-
-
     <!-- Footer -->
     <div class="footer">
         <span class="footer-title">Praktik Dokter Gigi Dwi Imbang Lestari</span>

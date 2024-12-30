@@ -117,7 +117,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID Anggota</th>
+                            <th>ID Pengguna</th>
                             <th>ID Antrean</th>
                             <th>No Antrean</th>
                             <th>Nama Pasien</th>
@@ -237,7 +237,7 @@
                 <table class="table" id="tableAntreanMendatang">
                     <thead>
                         <tr>
-                            <th>ID Anggota</th>
+                            <th>ID Pengguna</th>
                             <th>ID Antrean</th>
                             <th>No Antrean</th>
                             <th>Nama Pasien</th>
@@ -481,7 +481,6 @@
                                 @foreach ($layanan as $item)
                                     <option value="{{ $item->id_layanan }}">{{ $item->jenis_layanan }}</option>
                                 @endforeach
-                                <option value="Lainnya">Lainnya</option> <!-- Tambahkan opsi "Lainnya" -->
                             </select>
                         </div>
                         <div class="mb-3">

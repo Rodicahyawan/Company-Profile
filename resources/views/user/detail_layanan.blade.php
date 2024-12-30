@@ -10,24 +10,7 @@
 </head>
 <body>
     <!-- Navbar/Header -->
-    <div class="navbar">
-        <span class="logo">drg. Dwi Imbang Lestari</span>
-        <div class="mobile-menu-toggle" onclick="toggleMenu()">&#9776;</div> <!-- Ikon Burger Menu -->
-        <div class="nav-menu">
-            <a href="{{ route('user.homepage') }}" class="nav-item"><span class="icomoon-free--home"></span></a>
-            <a href="{{ route('user.tentang') }}" class="nav-item">Tentang</a>
-            <a href="{{ route('layanan.index') }}" class="nav-item active">Layanan</a>
-            <a href="{{ route('user.galeri') }}" class="nav-item">Galeri</a>
-            <a href="{{ route('user.ulasan') }}" class="nav-item">Ulasan</a>
-            <a href="{{ route('user.kontak') }}" class="nav-item">Kontak</a>
-            <a href="{{ route('user.janjitemu') }}">
-                <button class="appointment-button">Buat Janji Temu</button>
-            </a>
-            <a href="{{ route('user.profil') }}" class="nav-item">
-                <span class="bxs--user-circle"></span>
-            </a>
-        </div>
-    </div>
+    @include('user.layout')
 
     <!-- Overlay untuk menu popup -->
     <div class="overlay"></div>

@@ -34,50 +34,47 @@
     <!-- Judul -->
     <div class="judul">
         <h3>Ulasan Pasien</h3>
-    </div>
-    
+    </div> 
 
     <div class="container-custom">
-    <div class="review-card-container">
-        @foreach ($ulasans as $ulasan)
-            <a class="review-card-link">
-                <div class="review-card">
-                    <div class="review-card-body">
-                        <div class="profile-section">
-                            @php
-                                // Ambil foto profil berdasarkan relasi user di tabel ulasan
-                                $userProfile = $ulasan->user->foto_profil ?? 'default-profile.png'; 
-                            @endphp
-                            
-                            <!-- Menampilkan foto profil -->
-                            <img src="{{ asset('storage/' . $userProfile) }}" alt="Foto Profil" class="profile-icon">
+        <div class="review-card-container">
+            @foreach ($ulasans as $ulasan)
+                <a class="review-card-link">
+                    <div class="review-card">
+                        <div class="review-card-body">
+                            <div class="profile-section">
+                                @php
+                                    // Ambil foto profil berdasarkan relasi user di tabel ulasan
+                                    $userProfile = $ulasan->user->foto_profil ?? 'default-profile.png'; 
+                                @endphp
+                                
+                                @if (!empty($userProfile) && file_exists(storage_path('app/public/' . $userProfile)))
+                                    <img src="{{ asset('storage/' . $userProfile) }}" alt="Foto Profil" class="profile-icon">
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="user-avatar-icon" viewBox="0 0 24 24" preserveAspectRatio="none">
+                                        <path fill="currentColor" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10" opacity="0.5"/>
+                                        <path fill="currentColor" d="M16.807 19.011A8.46 8.46 0 0 1 12 20.5a8.46 8.46 0 0 1-4.807-1.489c-.604-.415-.862-1.205-.51-1.848C7.41 15.83 8.91 15 12 15s4.59.83 5.318 2.163c.35.643.093 1.433-.511 1.848M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6"/>
+                                    </svg>
+                                @endif
 
-                            <div class="profile-info">
-                                <p class="username">{{ $ulasan->nama_pasien }}</p>
-                                <div class="rating">
-                                    @for ($i = 0; $i < $ulasan->rating; $i++)
-                                        <span class="emojione--star"></span>
-                                    @endfor
-                                    @for ($i = 0; $i < (5 - $ulasan->rating); $i++)
-                                        <span class="emojione--star emojione--star-empty"></span>
-                                    @endfor
+                                <div class="profile-info">
+                                    <p class="username">{{ $ulasan->nama_pasien }}</p>
+                                    <div class="rating">
+                                        @for ($i = 0; $i < $ulasan->rating; $i++)
+                                            <span class="emojione--star"></span> <!-- Bintang penuh -->
+                                        @endfor
+                                    </div>
                                 </div>
                             </div>
+                            <h5 class="jenis-layanan">{{ $ulasan->jenis_layanan }}</h5>
+                            <p class="review-card-text">{{ $ulasan->ulasan }}</p>
                         </div>
-                        <h5 class="jenis-layanan">{{ $ulasan->jenis_layanan }}</h5>
-                        <p class="review-card-text">{{ $ulasan->ulasan }}</p>
                     </div>
-                </div>
-            </a>
-        @endforeach
+                </a>
+            @endforeach
+        </div>
     </div>
 </div>
-
-
-    
-</div>
-
-
 
     <!-- Call to Action -->
     <div class="cta-section">

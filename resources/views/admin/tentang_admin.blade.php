@@ -129,6 +129,7 @@
                 <input type="text" class="form-control" id="searchInput" placeholder="Cari keunggulan">
             </div>
             
+            <div class="table-responsive-wrapper">
             <table class="table">
                 <thead>
                     <tr>
@@ -164,6 +165,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
             
             <!-- Modal Tambah Tentang -->
             <div class="modal fade" id="tambahTentangModal" tabindex="-1" aria-labelledby="tambahTentangModalLabel" aria-hidden="true">

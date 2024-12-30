@@ -130,6 +130,10 @@ body {
         height: 60px;
     }
 
+    .logo{
+        font-size: 18px;
+    }
+
     .nav-menu {
         display: flex;
         flex-direction: column;
@@ -167,7 +171,7 @@ body {
 
     .mobile-menu-toggle {
         display: block;
-        font-size: 24px;
+        font-size: 18px;
         cursor: pointer;
         color: #6022C3;
     }
@@ -392,22 +396,34 @@ body {
     display: block;
 }
 
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+    margin: 80px 200px;
+}
+
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     /* Adjust card padding and layout for smaller screens */
     .account-info-card {
         margin: 40px 20px; /* Adjusted margin for mobile */
-        padding: 24px; /* Adjusted padding */
+        padding: 16px; /* Adjusted padding */
         flex-direction: column; /* Stack items vertically */
         align-items: flex-start; /* Align content to the left */
         position: relative; /* Positioning context for the edit button */
     }
 
-    /* Adjust icon sizes and account details margins */
-    .icon-user-avatar {
-        width: 80px;
-        height: 80px;
+    .profile-avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .user-avatar-img,
+    .user-avatar-icon {
+        width: 64px;
+        height: 64px;
     }
 
     .account-details {
@@ -417,6 +433,7 @@ body {
 
     .account-username {
         font-size: 20px;
+        margin-top: 16px;
     }
 
     .account-email, .account-phone {

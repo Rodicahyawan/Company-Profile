@@ -50,7 +50,6 @@
     @endif
 
 </div>
-
     
     <!-- Appointment Section -->
     <div class="appointment-section">
@@ -105,7 +104,6 @@
                         @foreach($layanan as $item)
                             <option value="{{ $item->id_layanan }}">{{ $item->jenis_layanan }}</option>
                         @endforeach
-                        <option value="Lainnya">Lainnya</option>
                     </select>                    
                 </div>
                 <div class="form-group">
@@ -116,7 +114,6 @@
             </div>
         </form>
     </div>
-
 
     <!-- Call to Action -->
     <div class="cta-section">
@@ -146,12 +143,49 @@
                 <div class="section-info layanan-list">
                     <span>Tambal Gigi</span>
                     <span>Cabut Gigi</span>
+                    <span>Scaling</span>
                     <span>Perawatan Saluran Akar</span>
-                    <span>Penataan Gigi dan Behel</span>
+                    <span>Pembuatan Gigi Palsu</span>
+                    <span>Crown Gigi</span>
+                    <span>Pemasangan Behel</span>
+                    <span>Fluoride Varnish</span>
+                    <span>Perawatan Gigi Anak</span>
                 </div>
             </div>
+            <div class="section jadwal-kontak">
+                <span class="section-title">Jadwal Praktik</span>
+                <span class="section-info">Senin - Sabtu<br />15.30 - 19.00 WIB</span>
+            
+                <div class="kontak-section"> 
+                    <div class="section-title">Kontak Kami</div>
+                    <div class="section-info">
+                        <a href="https://api.whatsapp.com/send/?phone=62895385103675&text&type=phone_number&app_absent=0" target="_blank" class="telephone-link">
+                            <span class="logos--whatsapp-icon"></span>0895385103675
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+                       
+            <div class="section ikuti-kami">
+                <span class="section-title">Ikuti Kami</span>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/drg.dwi_imbang/" target="_blank" class="social-link">
+                        <span class="skill-icons--instagram"></span> Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@drg.dwi_imbang" target="_blank" class="social-link">
+                        <span class="logos--tiktok-icon"></span> TikTok
+                    </a>
+                </div>
+            </div>           
         </div>
     </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <span>© 2024 Rodi Cahyawan</span>
+    </div>
+
     @if (session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', () => {
