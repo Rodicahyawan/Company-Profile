@@ -274,17 +274,23 @@ body {
     }
 }
 
-@media (max-width: 480px) {
+/* Responsive styling for small screens */
+@media (max-width: 768px) {
     .gallery-container {
-        grid-template-columns: 1fr; /* 1 kolom untuk layar kecil */
-        padding: 0 20px; /* Padding 20px di kiri dan kanan */
-        gap: 20px; /* Mengurangi jarak antar item */
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 20px;
+        gap: 20px;
     }
-
+    
     .gallery-caption {
-        font-size: 16px; /* Ukuran font keterangan lebih kecil */
+        font-size: 12px;
+        color: #8E4CFF;
+        text-align: center;
+        margin-top: 16px;
     }
 }
+
+
 
 /* Mengatur warna latar belakang dan warna teks pagination */
 .pagination .page-link {
