@@ -424,8 +424,8 @@ body {
 /* Responsive untuk tampilan lebih kecil */
 @media (max-width: 768px) {
     .cta-section {
-        padding: 32px;
-        margin: 0 20px;
+        padding: 30px;
+        margin: 0 16px;
         margin-top: 120px;
     }
 
@@ -435,6 +435,10 @@ body {
 
     .cta-button {
         width: 100%;
+    }
+
+    .cta-text {
+        font-size: 24px;
     }
 }
 
@@ -454,6 +458,10 @@ body {
     .footer {
         padding: 40px 20px;  /* Mengurangi padding pada layar kecil */
         /* Pusatkan konten di layar kecil */
+    }
+
+    .footer-bottom {
+        font-size: 12px;
     }
 }
 

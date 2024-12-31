@@ -144,7 +144,7 @@
 
     <!-- Footer Bottom -->
     <div class="footer-bottom">
-        <span>© 2024 Rodi Cahyawan</span>
+        <span>Copyright © 2025 Praktik drg. Dwi Imbang Lestari</span>
     </div>
 
 
