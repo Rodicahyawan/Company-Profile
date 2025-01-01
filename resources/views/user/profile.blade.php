@@ -398,7 +398,7 @@
                 <div class="kontak-section"> 
                     <div class="section-title">Kontak Kami</div>
                     <div class="section-info">
-                        <a href="https://api.whatsapp.com/send/?phone=62895385103675&text&type=phone_number&app_absent=0" target="_blank" class="telephone-link">
+                        <a href="https://wa.me/62895385103675" target="_blank" class="telephone-link">
                             <span class="logos--whatsapp-icon"></span>0895385103675
                         </a>
                     </div>

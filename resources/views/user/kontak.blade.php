@@ -43,7 +43,7 @@
             <h5 class="title">Konsultasi WhatsApp</h5>
             <div class="image-circle mx-auto" style="background-image: url('/Aset Gambar/contact.jpg');"></div>
             <p class="phone">+62 895-3851-03675</p>
-            <a href="https://api.whatsapp.com/send/?phone=62895385103675&text&type=phone_number&app_absent=0" target="_blank" class="btn btn-primary visit-btn">Klik untuk Mengunjungi</a>
+            <a href="https://wa.me/62895385103675" target="_blank" class="btn btn-primary visit-btn">Klik untuk Mengunjungi</a>
         </div>
         <div class="card contact-card p-4 text-center">
             <h5 class="title">Instagram</h5>
@@ -87,7 +87,7 @@
         <div class="cta-content">
             <p class="cta-text">Jaga kesehatan gigi Anda dengan rutin ke dokter gigi minimal 6 bulan sekali!</p>  
             <div class="cta-buttons">
-                <a href="https://api.whatsapp.com/send/?phone=62895385103675&text&type=phone_number&app_absent=0" class="cta-button primary-button">Hubungi Dokter</a>
+                <a href="https://wa.me/62895385103675" class="cta-button primary-button" target="_blank" rel="noopener noreferrer">Hubungi Dokter</a>
                 <a href="{{ route('user.janjitemu') }}" class="cta-button secondary-button">Buat Janji Temu</a>
             </div>
         </div>
@@ -126,7 +126,7 @@
                 <div class="kontak-section"> 
                     <div class="section-title">Kontak Kami</div>
                     <div class="section-info">
-                        <a href="https://api.whatsapp.com/send/?phone=62895385103675&text&type=phone_number&app_absent=0" target="_blank" class="telephone-link">
+                        <a href="https://wa.me/62895385103675" target="_blank" class="telephone-link">
                             <span class="logos--whatsapp-icon"></span>0895385103675
                         </a>
                     </div>
