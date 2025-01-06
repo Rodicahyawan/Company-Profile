@@ -60,7 +60,7 @@
                 <h2 class="about-us-title">Senyum Indah Dimulai dari Perawatan yang Tepat</h2>
                 <p class="about-us-description">
                     Kami percaya bahwa kesehatan gigi dan mulut yang terjaga berawal dari perawatan yang tepat dan profesional. 
-                    Telah dipercaya selama hampir 10 tahun, kami menyediakan layanan perawatan gigi lengkap untuk menjaga kesehatan gigi dan mulut Anda, mendukung kenyamanan dan kepercayaan diri dalam setiap aktivitas.
+                    Telah dipercaya selama 10 tahun, kami menyediakan layanan perawatan gigi lengkap untuk menjaga kesehatan gigi dan mulut Anda, mendukung kenyamanan dan kepercayaan diri dalam setiap aktivitas.
                 </p>
                 <a href="{{ route('user.tentang') }}" class="tentang button-tentang">Tentang Kami</a>
             </div>
