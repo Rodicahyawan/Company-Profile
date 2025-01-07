@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // HOMEPAGE
-Route::get('/homepage', [LayananControllerUser::class, 'homepage'])->name('user.homepage');
+Route::get('/', [LayananControllerUser::class, 'homepage'])->name('user.homepage');
 
 // LAYANAN
 Route::get('/layanan', function () {return view('user.layanan');});
