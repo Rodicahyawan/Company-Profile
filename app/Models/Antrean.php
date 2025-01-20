@@ -47,12 +47,13 @@ class Antrean extends Model
         return ucfirst($value);
     }
 
-    // Relasi ke tabel layanan
+    // Relasi ke model Layanan
     public function layanan()
     {
         return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan');
     }
 
+    // Relasi ke model Ulasan
     public function ulasan()
     {
         return $this->hasMany(Ulasan::class, 'antrean_id');

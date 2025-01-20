@@ -75,7 +75,4 @@ class TentangController extends Controller
         return redirect()->route('tentang.index')->with('success', 'Data berhasil dihapus.');
     }
 
-
-
 }
-

@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use HasFactory, HasRoles;
 
-    protected $fillable = [
+    protected $fillable = [ // Kolom yg bisa diisi
         'name',
         'email',
         'password',
@@ -20,19 +20,17 @@ class User extends Authenticatable
         'alamat'
     ];
 
-    protected $hidden = [
+    protected $hidden = [ // Menyembunyikan kolom saat data pengguna dikembalikan dalam bentuk JSON atau array
         'password', 
         'remember_token',
     ];
 
-    public function antreans()
+    public function antreans() // Relasi Antrean (One to Many)
     {
         return $this->hasMany(Antrean::class, 'user_id');
     }
 
-
-    
-    public function ulasan()
+    public function ulasan() // Relasi Ulasan (One to Many)
     {
         return $this->hasMany(Ulasan::class, 'user_id');
     }

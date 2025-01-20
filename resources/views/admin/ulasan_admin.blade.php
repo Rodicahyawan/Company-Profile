@@ -87,25 +87,7 @@
                 </div>
             </ul>
         </div>
-        <!-- Modal Logout-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin logout akun?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ url('/logout') }}" class="btn btn-danger">Logout</a> <!-- Tautan logout -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Header -->
         <div class="content bg-main p-4 flex-grow-1">
             <div class="header bg-white shadow-sm p-3 mb-4 d-flex align-items-center">
@@ -142,27 +124,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($ulasans as $ulasan)
+                    @foreach ($ulasans as $ulasan) <!-- mengiterasi setiap data ulasan yang ada dalam koleksi $ulasans -->
                         <tr>
                             <td>{{ $ulasan->id_ulasan }}</td>
                             <td>{{ $ulasan->user_id }}</td>
                             <td>{{ $ulasan->nama_pasien }}</td>
                             <td>
-                                <div class="rating">
-                                    @for ($i = 1; $i <= 5; $i++)
+                                <div class="rating"> <!-- Menampilkan bintang sesuai dengan nilai rating dari ulasan -->
+                                    @for ($i = 1; $i <= 5; $i++) 
                                         <span class="{{ $i <= $ulasan->rating ? 'line-md--star-filled' : 'line-md--star-empty' }}"></span>
                                     @endfor
                                 </div>
                             </td>
-                            <td>{{ $ulasan->jenis_layanan ?? 'Tidak Tersedia' }}</td>
-
-
-                            <td>{{ $ulasan->ulasan }}</td>
-                            <td>
-                            <button class="btn-tampilkan-ulasan" data-bs-toggle="modal" data-bs-target="#editStatusModal-{{ $ulasan->id_ulasan }}"
+                            <td>{{ $ulasan->jenis_layanan ?? 'Tidak Tersedia' }}</td> <!-- Menampilkan jenis layanan dari ulasan -->
+                            <td>{{ $ulasan->ulasan }}</td> <!-- Menampilkan deskripsi ulasan -->
+                            <td> <!-- Tombol pemicu modal edit status ulasan -->
+                            <button class="btn-tampilkan-ulasan" data-bs-toggle="modal" data-bs-target="#editStatusModal-{{ $ulasan->id_ulasan }}" 
                                 style="background-color: {{ $ulasan->status === 'Disembunyikan' ? '#FF8A00' : '#009A0F' }};">
                                 {{ $ulasan->status }}
                             </button>
+
                             <!-- Modal untuk edit status -->
                             <div class="modal fade" id="editStatusModal-{{ $ulasan->id_ulasan }}" tabindex="-1" aria-labelledby="editStatusLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -171,13 +152,13 @@
                                             <h5 class="modal-title" id="editStatusLabel">Edit Status Ulasan</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form method="POST" action="{{ route('ulasan.updateStatus', $ulasan->id_ulasan) }}">
+                                        <form method="POST" action="{{ route('ulasan.updateStatus', $ulasan->id_ulasan) }}"> <!-- Mengarahkan ke route ulasan.updateStatus dengan ID ulasan yang akan diperbarui -->
                                             @csrf
                                             <div class="modal-body">
                                                 <p>Pilih status untuk ulasan ini:</p>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="status" value="Ditampilkan" 
-                                                        id="tampilkan-{{ $ulasan->id_ulasan }}" {{ $ulasan->status === 'Ditampilkan' ? 'checked' : '' }}>
+                                                        id="tampilkan-{{ $ulasan->id_ulasan }}" {{ $ulasan->status === 'Ditampilkan' ? 'checked' : '' }}> <!-- Jika status dari ulasan saat ini sama dengan "Ditampilkan", maka atribut checked akan ditambahkan -->
                                                     <label class="form-check-label" for="tampilkan-{{ $ulasan->id_ulasan }}">
                                                         Tampilkan Ulasan
                                                     </label>
@@ -207,32 +188,32 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
             <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const table = document.querySelector('.table tbody');
-            
-            searchInput.addEventListener('input', function() {
-                const searchTerm = searchInput.value.toLowerCase();
-                const rows = table.getElementsByTagName('tr');
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('searchInput'); // mengetik kata kunci pencarian
+                    const table = document.querySelector('.table tbody'); // Data yang akan dicari berada di dalam elemen ini
+                    
+                    searchInput.addEventListener('input', function() {
+                        const searchTerm = searchInput.value.toLowerCase(); // Mengambil Nilai Pencarian
+                        const rows = table.getElementsByTagName('tr'); // Mengambil semua elemen baris dalam body 
 
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let found = false;
+                        for (let i = 0; i < rows.length; i++) { // Iterasi setiap baris di dalam tabel untuk memeriksa apakah kata kunci cocok
+                            const cells = rows[i].getElementsByTagName('td'); // Mengambil semua elemen cell dalam baris
+                            let found = false;
 
-                    for (let j = 0; j < cells.length; j++) {
-                        const cell = cells[j];
-                        if (cell.textContent.toLowerCase().includes(searchTerm)) {
-                            found = true;
-                            break;
+                            for (let j = 0; j < cells.length; j++) { 
+                                const cell = cells[j];
+                                if (cell.textContent.toLowerCase().includes(searchTerm)) { // Mengecek apakah teks dalam cell mengandung kata kunci
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            rows[i].style.display = found ? '' : 'none'; // Menampilkan baris jika kata kunci cocock dan Menyembunyikan baris yang tidak mengandung kata kunci pencarian
                         }
-                    }
+                    });
+                });
+            </script>
 
-                    rows[i].style.display = found ? '' : 'none';
-                }
-            });
-        });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

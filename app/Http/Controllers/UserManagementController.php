@@ -11,8 +11,8 @@ class UserManagementController extends Controller
     // Method untuk menampilkan data pengguna
     public function index()
     {
-        $pengguna = User::all(); // Ambil semua data pengguna
-        return view('admin.datauser_admin', compact('pengguna'));
+        $pengguna = User::all(); // Mengambil semua data dari tabel users yang diasosiasikan dengan model User
+        return view('admin.datauser_admin', compact('pengguna')); // Mengirim data pengguna ke view agar ditampilkan.
     }
 
     public function store(Request $request)
@@ -26,14 +26,14 @@ class UserManagementController extends Controller
             'alamat' => 'nullable|string|max:255', // Validasi kolom alamat
         ]);
 
-        // Simpan data pengguna baru ke database
-        User::create([
+        // Simpan data pengguna baru ke database menggunakan model User
+        User::create([ 
             'name' => $request->name,
             'email' => $request->email,
             'no_telepon' => $request->no_telepon,
-            'password' => bcrypt($request->password), // enkripsi password
-            'foto_profil' => $request->file('foto_profil') ? $request->file('foto_profil')->store('profile_images') : null,
-            'alamat' => $request->alamat, // Menyimpan alamat
+            'password' => bcrypt($request->password), // Password dienkripsi menggunakan bcrypt
+            'foto_profil' => $request->file('foto_profil') ? $request->file('foto_profil')->store('profile_images') : null, // Jika ada file foto profil, file disimpan ke direktori profile_images, dan path-nya disimpan di database
+            'alamat' => $request->alamat, 
         ]);
 
         // Redirect kembali dengan pesan sukses
@@ -53,7 +53,7 @@ class UserManagementController extends Controller
 
     public function edit($id)
     {
-        $pengguna = User::find($id);
+        $pengguna = User::find($id); // Mengambil data pengguna dari database berdasarkan ID
         return response()->json($pengguna); // Mengembalikan data JSON untuk ditampilkan di modal
     }
 
@@ -69,7 +69,7 @@ class UserManagementController extends Controller
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Temukan data pengguna
+        // Mencari pengguna dengan ID yang sesuai
         $pengguna = User::findOrFail($id);
 
         // Update data pengguna
@@ -90,7 +90,7 @@ class UserManagementController extends Controller
                 \Storage::delete('public/' . $pengguna->foto_profil);
             }
 
-            // Simpan file foto profil baru
+            // Foto baru disimpan di folder profile_images dengan disk public
             $pengguna->foto_profil = $request->file('foto_profil')->store('profile_images', 'public');
         }
 

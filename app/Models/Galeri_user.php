@@ -13,5 +13,5 @@ class Galeri_user extends Model
     protected $table = 'galeri'; 
 
     // Jika ada kolom yang perlu diisi secara massal
-    protected $fillable = ['gambar', 'nama_perawatan']; // Sesuaikan dengan kolom tabel Anda
+    protected $fillable = ['gambar', 'nama_perawatan'];
 }

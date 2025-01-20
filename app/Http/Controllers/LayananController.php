@@ -31,10 +31,10 @@ class LayananController extends Controller
         ]);
 
         // Proses upload gambar
-        $gambarUtamaPath = $request->file('gambar_utama')->store('images', 'public');
+        $gambarUtamaPath = $request->file('gambar_utama')->store('images', 'public'); //Mengunggah file inputan gambar pertama dan menyimpannya ke folder images dalam penyimpanan publik
         $gambarKeduaPath = $request->file('gambar_kedua')->store('images', 'public');
 
-        // Simpan data layanan ke database
+        // Membuat entri baru di tabel layanan
         Layanan::create([
             'jenis_layanan' => $request->jenis_layanan,
             'gambar_utama' => $gambarUtamaPath,
@@ -64,16 +64,16 @@ class LayananController extends Controller
         $layanan->jenis_layanan = $request->jenis_layanan;
 
         // Memeriksa dan menghapus gambar utama jika di-upload gambar baru
-        if ($request->hasFile('gambar_utama')) {
+        if ($request->hasFile('gambar_utama')) { // Mengecek apakah ada file gambar baru yang diunggah
             // Hapus gambar lama jika ada
-            if ($layanan->gambar_utama) {
-                Storage::disk('public')->delete($layanan->gambar_utama);
+            if ($layanan->gambar_utama) { // Mengecek apakah data layanan saat ini sudah memiliki gambar utama
+                Storage::disk('public')->delete($layanan->gambar_utama); // Menghapus file gambar lama dari penyimpanan
             }
-            $layanan->gambar_utama = $request->file('gambar_utama')->store('images', 'public');
+            $layanan->gambar_utama = $request->file('gambar_utama')->store('images', 'public'); // Mengunggah file gambar baru ke direktori images di disk public
         }
 
         // Memperbarui deskripsi
-        $layanan->deskripsi_singkat = $request->deskripsi_singkat;
+        $layanan->deskripsi_singkat = $request->deskripsi_singkat; // Mengambil data inputan kemudian disimpan ke properti deskripsi_singkat
         $layanan->deskripsi_lengkap = $request->deskripsi_lengkap;
 
         // Memeriksa dan menghapus gambar kedua jika di-upload gambar baru
@@ -92,21 +92,20 @@ class LayananController extends Controller
         return redirect()->back()->with('success', 'Layanan berhasil diperbarui.');
     }
 
-
     public function destroy($id)
     {
-        $layanan = Layanan::findOrFail($id);
+        $layanan = Layanan::findOrFail($id); // Mencari data layanan di database berdasarkan $id
     
         // Hapus file gambar dari storage jika ada
-        if ($layanan->gambar) {
-            $gambarPath = 'public/images/' . $layanan->gambar; // Tentukan path gambar
+        if ($layanan->gambar) { // Memeriksa apakah ada gambar
+            $gambarPath = 'public/images/' . $layanan->gambar; // Menentukan path file gambar berdasarkan nama file yang disimpan di database
             
             // Log path gambar yang akan dihapus
             \Log::info('Menghapus gambar: ' . $gambarPath);
             
             // Cek apakah file gambar ada dan hapus
-            if (\Storage::exists($gambarPath)) {
-                \Storage::delete($gambarPath);
+            if (\Storage::exists($gambarPath)) { // Mengecek apakah file gambar benar-benar ada di penyimpanan
+                \Storage::delete($gambarPath); // Jika file ditemukan, maka file tersebut dihapus dari penyimpanan
             } else {
                 \Log::warning('Gambar tidak ditemukan: ' . $gambarPath);
             }
@@ -118,6 +117,4 @@ class LayananController extends Controller
         return redirect()->back()->with('success', 'Layanan berhasil dihapus.');
     }
     
-
-
 }

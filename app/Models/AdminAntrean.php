@@ -28,18 +28,23 @@ class AdminAntrean extends Model
     ];
 
     // Tentukan primary key jika bukan 'id'
-    protected $primaryKey = 'id_antrean'; // Pastikan menggunakan 'id_antrean' sebagai primary key
+    protected $primaryKey = 'id_antrean';
 
     // Tentukan tipe data primary key jika menggunakan UUID atau tipe lainnya
-    protected $keyType = 'int'; // Jika menggunakan integer
+    protected $keyType = 'int';
 
+    // Nonaktifkan otomatisasi timestamp
     public $timestamps = false;
+
+    // Relasi dengan model Layanan
     public function layanan()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan');
-    }  // Nonaktifkan otomatisasi timestamp
+        return $this->belongsTo(Layanan::class, 'layanan_id', 'id_layanan'); // Foreign key di tabel antrean & primary key pada tabel layanan
+    }  
+
+    // Relasi dengan model User
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id'); // Foreign key di tabel antrean
     }
 }

@@ -38,7 +38,6 @@
 
     <!-- Content 1 -->
     <div class="main-container">
-       
         <div class="service-image">
             <img src="{{ asset('storage/' . $layanan->gambar_utama) }}" alt="{{ $layanan->jenis_layanan }}" class="image" />
         </div>
@@ -68,10 +67,6 @@
         </div>    
     </div>
 
-    
-    
-    
-    
 
     <!-- Call to Action -->
     <div class="cta-section">

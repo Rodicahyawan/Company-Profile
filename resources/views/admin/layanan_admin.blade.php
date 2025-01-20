@@ -87,25 +87,7 @@
                 </div>
             </ul>
         </div>
-        <!-- Modal Logout-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin logout akun?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ url('/logout') }}" class="btn btn-danger">Logout</a> <!-- Tautan logout -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Header -->
         <div class="content bg-main p-4 flex-grow-1">
             <div class="header bg-white shadow-sm p-3 mb-4 d-flex align-items-center">
@@ -143,7 +125,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($layanan as $item) <!-- Pastikan ini menggunakan $layanan -->
+                @foreach ($layanan as $item) <!-- Melakukan iterasi melalui data $layanan -->
                     <tr>
                         <td>{{ $item->id_layanan }}</td>
                         <td>{{ $item->jenis_layanan }}</td>
@@ -166,11 +148,11 @@
                         </td>
                         <td>
                             <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#editServiceModal" 
-                            data-id="{{ $item->id_layanan }}" 
-                            data-jenis="{{ $item->jenis_layanan }}" 
-                            data-deskripsi="{{ $item->deskripsi_singkat }}" 
-                            data-deskripsi-lengkap="{{ $item->deskripsi_lengkap }}" 
-                            data-kapan="{{ $item->kapan_dibutuhkan }}">
+                                data-id="{{ $item->id_layanan }}" 
+                                data-jenis="{{ $item->jenis_layanan }}" 
+                                data-deskripsi="{{ $item->deskripsi_singkat }}" 
+                                data-deskripsi-lengkap="{{ $item->deskripsi_lengkap }}" 
+                                data-kapan="{{ $item->kapan_dibutuhkan }}">
                             <span class="iconamoon--edit"></span>
                             </a>
                             <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" data-id="{{ $item->id_layanan }}">
@@ -252,7 +234,7 @@
             </div>
 
             <!-- Modal Edit Layanan -->
-            <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+            <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true"> <!-- Mengarahkan data formulir ke route yang bertugas menyimpan data layanan -->
                 <div class="modal-dialog">
                     <form action="{{ route('layanan.update', ['layanan' => ':id_layanan']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -303,11 +285,11 @@
             <script>
                 // Event listener for the edit link
                 document.addEventListener('DOMContentLoaded', function() {
-                    const editServiceModal = document.getElementById('editServiceModal');
+                    const editServiceModal = document.getElementById('editServiceModal'); // Mengambil elemen modal dengan ID editServiceModal.
                     
                     editServiceModal.addEventListener('show.bs.modal', function(event) {
-                        const button = event.relatedTarget; // Button that triggered the modal
-                        const id = button.getAttribute('data-id');
+                        const button = event.relatedTarget; // Mengambil elemen (button) yang memicu pembukaan modal.
+                        const id = button.getAttribute('data-id'); // Mengambil nilai atribut data 
                         const jenis = button.getAttribute('data-jenis');
                         const deskripsi = button.getAttribute('data-deskripsi');
                         const deskripsiLengkap = button.getAttribute('data-deskripsi-lengkap');

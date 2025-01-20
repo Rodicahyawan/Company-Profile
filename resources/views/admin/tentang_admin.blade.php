@@ -87,24 +87,6 @@
                 </div>
             </ul>
         </div>
-        <!-- Modal Logout-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin logout akun?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ url('/logout') }}" class="btn btn-danger">Logout</a> <!-- Tautan logout -->
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Header -->
         <div class="content bg-main p-4 flex-grow-1">
@@ -141,13 +123,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tentang as $item)
+                    @foreach ($tentang as $item) <!-- Melakukan iterasi untuk setiap objek dalam array $tentang, dan setiap item dalam array tersebut diakses dengan variabel $item -->
                         <tr>
-                            <td>{{ $item->id_tentang }}</td>
+                            <td>{{ $item->id_tentang }}</td> <!-- Menampilkan ID Tentang dari masing-masing $item -->
                             <td>{{ $item->keunggulan }}</td>
                             <td>{{ $item->deskripsi }}</td>
-                            <td>
-                                @if ($item->gambar)
+                            <td> <!-- Mengecek apakah item memiliki gambar -->
+                                @if ($item->gambar) <!-- Jika ada gambar, maka tampilkan gambar -->
                                     <img src="{{ asset('storage/' . $item->gambar) }}" style="width: 100px;">
                                 @else
                                     Tidak ada gambar
@@ -168,8 +150,8 @@
             </div>
             
             <!-- Modal Tambah Tentang -->
-            <div class="modal fade" id="tambahTentangModal" tabindex="-1" aria-labelledby="tambahTentangModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+            <div class="modal fade" id="tambahTentangModal" tabindex="-1" aria-labelledby="tambahTentangModalLabel" aria-hidden="true"> <!-- Membuat modal yang bisa muncul dengan efek transisi (fade) -->
+                <div class="modal-dialog"> <!-- kontainer yang menampung seluruh konten modal -->
                     <form action="{{ route('tentang.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-content">
@@ -236,8 +218,8 @@
             </div>
 
             <script>
-                var editModal = document.getElementById('editTentangModal');
-                editModal.addEventListener('show.bs.modal', function (event) {
+                var editModal = document.getElementById('editTentangModal'); // menampilkan form edit
+                editModal.addEventListener('show.bs.modal', function (event) { // mengatur data yang akan ditampilkan di modal
                     // Tombol yang memicu modal
                     var button = event.relatedTarget;
                     // Ambil data dari atribut data-* tombol
@@ -246,11 +228,11 @@
                     var deskripsi = button.getAttribute('data-deskripsi');
                     
                     // Masukkan data ke dalam input form modal
-                    var inputKeunggulan = editModal.querySelector('#editKeunggulan');
+                    var inputKeunggulan = editModal.querySelector('#editKeunggulan'); 
                     var inputDeskripsi = editModal.querySelector('#editDeskripsi');
                     var editForm = document.getElementById('editForm');
 
-                    inputKeunggulan.value = keunggulan;
+                    inputKeunggulan.value = keunggulan; // mengisi nilai input dengan data yang sudah diambil sebelumnya
                     inputDeskripsi.value = deskripsi;
 
                     // Ubah action form untuk mengarahkan ke route update dengan ID yang sesuai
@@ -274,11 +256,11 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                             <!-- Form penghapusan -->
-                            <form action="{{ route('tentang.destroy', ['id' => 0]) }}" method="POST" id="deleteForm">
-                                @csrf
+                            <form action="{{ route('tentang.destroy', ['id' => 0]) }}" method="POST" id="deleteForm"> <!-- mengarahkan ke route yang berfungsi untuk menghapus data -->
+                                @csrf <!-- melindungi aplikasi dari serangan CSRF -->
                                 @method('DELETE')
-                                <input type="hidden" name="id_tentang" id="deleteId">
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <input type="hidden" name="id_tentang" id="deleteId"> <!-- Input tersembunyi yang akan menyimpan ID data yang akan dihapus -->
+                                <button type="submit" class="btn btn-danger">Hapus</button> <!-- Tombol untuk mengirim form dan melakukan penghapusan data -->
                             </form>
                         </div>
                     </div>
@@ -287,7 +269,7 @@
 
             <script>
                 var deleteModal = document.getElementById('deleteTentangModal');
-                deleteModal.addEventListener('show.bs.modal', function (event) {
+                deleteModal.addEventListener('show.bs.modal', function (event) { // ketika modal konfirmasi hapus muncul, fungsi berikut akan dijalankan
                     // Ambil tombol yang memicu modal
                     var button = event.relatedTarget;
                     // Ambil data-id dari tombol delete

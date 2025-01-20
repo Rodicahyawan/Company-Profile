@@ -87,25 +87,6 @@
                 </div>
             </ul>
         </div>
-        <!-- Modal Logout-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin logout akun?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ route('admin.logout') }}" class="btn btn-danger">Logout</a> <!-- Tautan logout -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <!-- Header -->
         <div class="content bg-main p-4 flex-grow-1">
@@ -147,39 +128,39 @@
             <br><br><br>
 
             <!-- Graph -->
-<div class="chart-container">
-    <h3 class="text-dark chart-title">Statistik Riwayat Perawatan</h3>
-    <canvas id="perawatanChart"></canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('perawatanChart').getContext('2d');
+            <div class="chart-container">
+                <h3 class="text-dark chart-title">Statistik Riwayat Perawatan</h3>
+                <canvas id="perawatanChart"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                var ctx = document.getElementById('perawatanChart').getContext('2d');
 
-    // Data dari controller
-    var perawatanData = @json($perawatanBulanan);
-    var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                // Data dari controller
+                var perawatanData = @json($perawatanBulanan);
+                var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
-    // Data tanpa rotasi (langsung pakai urutan standar)
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels, // Tidak diubah, tetap urutan Januari - Desember
-            datasets: [{
-                label: 'Total Perawatan',
-                data: perawatanData, // Data tidak diubah, mengikuti urutan default
-                backgroundColor: '#6022C3'
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
+                // Data tanpa rotasi (langsung pakai urutan standar)
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Tidak diubah, tetap urutan Januari - Desember
+                        datasets: [{
+                            label: 'Total Perawatan',
+                            data: perawatanData, // Data tidak diubah, mengikuti urutan default
+                            backgroundColor: '#6022C3'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
 
         </div>
     </div>

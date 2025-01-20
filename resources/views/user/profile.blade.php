@@ -55,12 +55,12 @@
         <!-- Profile Icon -->
         <div class="profile-avatar">
             <span class="icon-user-avatar">
-                @if ($user->foto_profil)
+                @if ($user->foto_profil) <!-- Mengeck apakah user memiliki foto profil yang tersimpan di db -->
                     <img 
                         src="{{ Storage::url($user->foto_profil) }}" 
                         alt="User Avatar" 
-                        class="user-avatar-img">
-                @else
+                        class="user-avatar-img"> <!-- Jika ada, maka diambil dan ditampilkan -->
+                @else <!-- Jika tidak ada maka yg ditampilkan adalah icon default -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="user-avatar-icon" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10" opacity="0.5"/>
                         <path fill="currentColor" d="M16.807 19.011A8.46 8.46 0 0 1 12 20.5a8.46 8.46 0 0 1-4.807-1.489c-.604-.415-.862-1.205-.51-1.848C7.41 15.83 8.91 15 12 15s4.59.83 5.318 2.163c.35.643.093 1.433-.511 1.848M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6"/>
@@ -74,7 +74,7 @@
             <p class="account-email">{{ $user->email }}</p>
             <p class="account-phone">{{ $user->no_telepon }}</p>
         </div>
-        <!-- Button Section -->
+        <!-- Button Section edit & logout -->
         <div class="button-section ms-auto">
             <button class="btn edit-button" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                 <span class="icon-edit-pen me-2"></span>
@@ -86,26 +86,27 @@
                 </button>
         </div>
     </div>
-            <!-- Modal Logout-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Apakah Anda yakin ingin logout akun?
-                        </div>
-                        <div class="modal-footer">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline-block">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Logout</button>
-                            </form>
-                        </div>
-                    </div>
+
+    <!-- Modal Logout-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin logout akun?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline-block">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
 
     <!-- Modal Edit Profil -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
@@ -148,9 +149,10 @@
             </div>
         </div>
     </div>
+
     <!-- Main content -->
-    <div class="main-container">
-        <div class="frame frame-1 active" onclick="showContent('content-jadwal', this)">
+    <div class="main-container"> <!-- kontainer utama yang berisi 2 tab -->
+        <div class="frame frame-1 active" onclick="showContent('content-jadwal', this)"> <!-- tab pertama yg secara default aktif -->
             <span class="menu-text jadwal-saya active-text">Jadwal Saya</span>
         </div>
         <div class="frame frame-2" onclick="showContent('content-histori', this)">
@@ -158,98 +160,13 @@
         </div>
     </div>
 
-<!-- Content Sections -->
-<div id="content-jadwal" class="content">
-    <!-- Jadwal Saya Card -->
-    @if($antrean->isEmpty())
-    <p>Saat ini anda belum mempunyai janji temu</p>
-@else
-    @foreach($antrean as $item)
-    <div class="jadwal-card">
-        <div class="card-details">
-            <span class="date-info">{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</span>
-            <span class="patient-info">Nama Pasien: {{ $item->nama_pasien }}</span>
-            <span class="service-info">Layanan: {{ $item->layanan->jenis_layanan }}</span>
-            <span class="queue-info">
-                No Antrean: {{ $item->no_antrean }}
-            </span>
-        </div>
-        <div class="card-actions">
-            <!-- Tombol Aksi -->
-            <button class="cancel-button" data-bs-toggle="modal" data-bs-target="#batalkanModal{{ $item->id_antrean }}">
-                <span class="button-text-large">Batalkan</span>
-            </button>
-            <button class="done-button" data-bs-toggle="modal" data-bs-target="#selesaiModal{{ $item->id_antrean }}">
-                <span class="button-text-large-5">Selesai</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Modal Konvirmasi Selesai -->
-    <div class="modal fade" id="selesaiModal{{ $item->id_antrean }}" tabindex="-1" aria-labelledby="selesaiModalLabel{{ $item->id_antrean }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="selesaiModalLabel{{ $item->id_antrean }}">Konfirmasi Layanan Selesai</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin layanan untuk pasien <strong>{{ $item->nama_pasien }}</strong> pada tanggal 
-                    <strong>{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</strong> telah selesai dilakukan?
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ route('antrean.selesai', $item->id_antrean) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="btn btn-primary">Ya, Selesai</button>
-                    </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    <!-- Modal Batalkan Antrean -->
-    <div class="modal fade" id="batalkanModal{{ $item->id_antrean }}" tabindex="-1" aria-labelledby="batalkanModalLabel{{ $item->id_antrean }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="batalkanModalLabel{{ $item->id_antrean }}">Konfirmasi Pembatalan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin membatalkan antrean untuk pasien <strong>{{ $item->nama_pasien }}</strong> pada tanggal <strong>{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</strong>?
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ route('antrean.batalkan', $item->id_antrean) }}" method="POST" style="display: inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Batalkan</button>
-                    </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-    @endif
-    
-</div>
-
-<div id="content-histori" class="content">
-    @if($historyAntrean->isNotEmpty())
-        @foreach($historyAntrean as $item)
+    <!-- Content Sections -->
+    <div id="content-jadwal" class="content">
+        <!-- Jadwal Saya Card -->
+        @if($antrean->isEmpty())
+        <p>Saat ini anda belum mempunyai janji temu</p>
+    @else
+        @foreach($antrean as $item)
         <div class="jadwal-card">
             <div class="card-details">
                 <span class="date-info">{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</span>
@@ -260,67 +177,152 @@
                 </span>
             </div>
             <div class="card-actions">
-                <!-- Tombol untuk membuka modal -->
-                <button type="button" class="cancel-button" data-bs-toggle="modal" data-bs-target="#beriUlasanModal-{{ $item->id }}">
-                    <span class="button-text-large">Beri Ulasan</span>
+                <!-- Tombol Aksi -->
+                <button class="cancel-button" data-bs-toggle="modal" data-bs-target="#batalkanModal{{ $item->id_antrean }}">
+                    <span class="button-text-large">Batalkan</span>
+                </button>
+                <button class="done-button" data-bs-toggle="modal" data-bs-target="#selesaiModal{{ $item->id_antrean }}">
+                    <span class="button-text-large-5">Selesai</span>
                 </button>
             </div>
         </div>
-        
-        <!-- Modal untuk Beri Ulasan -->
-        <div class="modal fade" id="beriUlasanModal-{{ $item->id }}" tabindex="-1" aria-labelledby="beriUlasanModalLabel-{{ $item->id }}" aria-hidden="true">
+
+        <!-- Modal Konvirmasi Selesai -->
+        <div class="modal fade" id="selesaiModal{{ $item->id_antrean }}" tabindex="-1" aria-labelledby="selesaiModalLabel{{ $item->id_antrean }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="beriUlasanModalLabel-{{ $item->id }}">Beri Ulasan</h5>
+                        <h5 class="modal-title" id="selesaiModalLabel{{ $item->id_antrean }}">Konfirmasi Layanan Selesai</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('ulasan.store') }}" method="POST">
+                        Apakah Anda yakin layanan untuk pasien <strong>{{ $item->nama_pasien }}</strong> pada tanggal 
+                        <strong>{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</strong> telah selesai dilakukan?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{{ route('antrean.selesai', $item->id_antrean) }}" method="POST">
                             @csrf
-                            <!-- Input tersembunyi untuk Layanan ID dan Antrean ID -->
-                            <input type="hidden" name="layanan_id" value="{{ $item->layanan->id_layanan }}">
-                            <!-- Rating -->
-                            <div class="mb-3">
-                                <label for="rating" class="form-label">Rating</label>
-                                <div class="stars">
-                                    <input type="radio" name="rating" id="star5-{{ $item->id }}" value="5">
-                                    <label for="star5-{{ $item->id }}" class="star">&#9733;</label>
-                                    <input type="radio" name="rating" id="star4-{{ $item->id }}" value="4">
-                                    <label for="star4-{{ $item->id }}" class="star">&#9733;</label>
-                                    <input type="radio" name="rating" id="star3-{{ $item->id }}" value="3">
-                                    <label for="star3-{{ $item->id }}" class="star">&#9733;</label>
-                                    <input type="radio" name="rating" id="star2-{{ $item->id }}" value="2">
-                                    <label for="star2-{{ $item->id }}" class="star">&#9733;</label>
-                                    <input type="radio" name="rating" id="star1-{{ $item->id }}" value="1">
-                                    <label for="star1-{{ $item->id }}" class="star">&#9733;</label>
-                                </div>
-                            </div>
-
-                            <!-- Ulasan -->
-                            <div class="mb-3">
-                                <label for="ulasan-{{ $item->id }}" class="form-label">Ulasan</label>
-                                <textarea class="form-control" id="ulasan-{{ $item->id }}" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
-                            </div>
-
-                            <!-- Footer Modal -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
-                            </div>
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-primary">Ya, Selesai</button>
                         </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <!-- Modal Batalkan Antrean -->
+        <div class="modal fade" id="batalkanModal{{ $item->id_antrean }}" tabindex="-1" aria-labelledby="batalkanModalLabel{{ $item->id_antrean }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="batalkanModalLabel{{ $item->id_antrean }}">Konfirmasi Pembatalan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin membatalkan antrean untuk pasien <strong>{{ $item->nama_pasien }}</strong> pada tanggal <strong>{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{{ route('antrean.batalkan', $item->id_antrean) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Batalkan</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
         </div>
         @endforeach
-    @else
-        <p>Belum ada riwayat layanan</p>
-    @endif
-</div>
+        @endif
+        
+    </div>
 
+    <div id="content-histori" class="content">
+        @if($historyAntrean->isNotEmpty())
+            @foreach($historyAntrean as $item)
+            <div class="jadwal-card">
+                <div class="card-details">
+                    <span class="date-info">{{ \Carbon\Carbon::parse($item->tanggal_kedatangan)->translatedFormat('l, d F Y') }}</span>
+                    <span class="patient-info">Nama Pasien: {{ $item->nama_pasien }}</span>
+                    <span class="service-info">Layanan: {{ $item->layanan->jenis_layanan }}</span>
+                    <span class="queue-info">
+                        No Antrean: {{ $item->no_antrean }}
+                    </span>
+                </div>
+                <div class="card-actions">
+                    <!-- Tombol untuk membuka modal -->
+                    <button type="button" class="cancel-button" data-bs-toggle="modal" data-bs-target="#beriUlasanModal-{{ $item->id }}">
+                        <span class="button-text-large">Beri Ulasan</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal untuk Beri Ulasan -->
+            <div class="modal fade" id="beriUlasanModal-{{ $item->id }}" tabindex="-1" aria-labelledby="beriUlasanModalLabel-{{ $item->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="beriUlasanModalLabel-{{ $item->id }}">Beri Ulasan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('ulasan.store') }}" method="POST">
+                                @csrf
+                                <!-- Input tersembunyi untuk Layanan ID dan Antrean ID -->
+                                <input type="hidden" name="layanan_id" value="{{ $item->layanan->id_layanan }}">
+                                <!-- Rating -->
+                                <div class="mb-3">
+                                    <label for="rating" class="form-label">Rating</label>
+                                    <div class="stars">
+                                        <input type="radio" name="rating" id="star5-{{ $item->id }}" value="5">
+                                        <label for="star5-{{ $item->id }}" class="star">&#9733;</label>
+                                        <input type="radio" name="rating" id="star4-{{ $item->id }}" value="4">
+                                        <label for="star4-{{ $item->id }}" class="star">&#9733;</label>
+                                        <input type="radio" name="rating" id="star3-{{ $item->id }}" value="3">
+                                        <label for="star3-{{ $item->id }}" class="star">&#9733;</label>
+                                        <input type="radio" name="rating" id="star2-{{ $item->id }}" value="2">
+                                        <label for="star2-{{ $item->id }}" class="star">&#9733;</label>
+                                        <input type="radio" name="rating" id="star1-{{ $item->id }}" value="1">
+                                        <label for="star1-{{ $item->id }}" class="star">&#9733;</label>
+                                    </div>
+                                </div>
+
+                                <!-- Ulasan -->
+                                <div class="mb-3">
+                                    <label for="ulasan-{{ $item->id }}" class="form-label">Ulasan</label>
+                                    <textarea class="form-control" id="ulasan-{{ $item->id }}" name="ulasan" rows="4">{{ old('ulasan') }}</textarea>
+                                </div>
+
+                                <!-- Footer Modal -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                    <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        @else
+            <p>Belum ada riwayat layanan</p>
+        @endif
+    </div>
 
     <script>
+        // Event ini dipicu saat seluruh konten HTML selesai dimuat
         document.addEventListener("DOMContentLoaded", function() {
             // Set default active content on page load
             const defaultActiveFrame = document.querySelector('.frame-1');
@@ -362,7 +364,6 @@
                 selectedContent.classList.add('active-content');
             }
         }
-
     </script>
     
     <!-- Footer -->
@@ -425,10 +426,6 @@
     <div class="footer-bottom">
         <span>Copyright © 2025 Praktik drg. Dwi Imbang Lestari</span>
     </div>
-
-
-    
-
 
 </body>
 </html>

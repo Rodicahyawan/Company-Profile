@@ -88,24 +88,6 @@
                 </div>
             </ul>
         </div>
-        <!-- Modal Logout-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin logout akun?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{ url('/logout') }}" class="btn btn-danger">Logout</a> <!-- Tautan logout -->
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Header -->
         <div class="content bg-main p-4 flex-grow-1">
@@ -144,7 +126,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach($galeri as $item)
+                    @foreach($galeri as $item) <!-- Looping untuk menampilkan setiap item dalam koleksi galeri -->
                         <tr>
                             <td>{{ $item->id_gambar }}</td>
                             <td>{{ $item->nama_perawatan }}</td>
@@ -154,10 +136,10 @@
                             </td>
                             <td>
                                 <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#editGaleriModal" onclick="editGaleri({{ $item }})">
-                                    <span class="iconamoon--edit"></span>
+                                    <span class="iconamoon--edit"></span> <!-- Memanggil modal untuk mengedit data galer -->
                                 </a>
                                 <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteGaleriModal" onclick="setDeleteGaleri({{ $item->id_gambar }})">
-                                    <span class="fluent--delete-20-regular"></span>
+                                    <span class="fluent--delete-20-regular"></span> <!-- Memanggil modal untuk mengonfirmasi penghapusan -->
                                 </a>
                             </td>
                         </tr>
@@ -165,6 +147,7 @@
                 </tbody>
             </table>
             </div>
+
             <!-- Pagination Links -->
             <div class="d-flex justify-content-center mt-4">
                 {{ $galeri->links('pagination::bootstrap-4') }} <!-- Menggunakan tampilan pagination Bootstrap -->
@@ -172,7 +155,7 @@
 
 
                 <!-- Modal Tambah Galeri -->
-                <div class="modal fade" id="tambahGaleriModal" tabindex="-1" aria-labelledby="tambahGaleriModalLabel" aria-hidden="true">
+                <div class="modal fade" id="tambahGaleriModal" tabindex="-1" aria-labelledby="tambahGaleriModalLabel" aria-hidden="true"> <!-- Membuat modal yang akan muncul dengan efek animasi "fade" -->
                     <div class="modal-dialog">
                         <form action="{{ route('Galeri.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf

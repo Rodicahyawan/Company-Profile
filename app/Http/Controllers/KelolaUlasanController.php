@@ -17,7 +17,7 @@ class KelolaUlasanController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        // Validasi input (opsional)
+        // Validasi input 
         $request->validate([
             'status' => 'required|in:Ditampilkan,Disembunyikan',
         ]);

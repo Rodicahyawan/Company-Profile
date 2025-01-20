@@ -18,28 +18,21 @@ class ProfileController extends Controller
         
         // Mendapatkan data antrean yang akan datang (tanggal kedatangan >= sekarang)
         $antrean = Antrean::where('user_id', $userId)
-            
             -> where('status_antrean', 'Dalam Antrean')
             ->with('layanan')
             ->get();
         
         // Mendapatkan riwayat antrean yang sudah lewat (tanggal kedatangan < sekarang)
         $historyAntrean = Antrean::where('user_id', $userId)
-
             -> where('status_antrean', 'Selesai')
             ->with('layanan')
             ->orderBy('tanggal_kedatangan', 'desc')
             ->get();
-
-            // dd([$antrean, $historyAntrean]);
         
         // Mengirimkan data pengguna, antrean, dan historyAntrean ke view 'user.profile'
         return view('user.profile', compact('user', 'antrean', 'historyAntrean'));
     }
     
-    
-
-
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -76,7 +69,5 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
-    }
-
-    
+    }   
 }

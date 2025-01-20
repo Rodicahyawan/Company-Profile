@@ -19,7 +19,7 @@ use App\Http\Controllers\KelolaUlasanController;
 // ROUTE ADMIN
 // LOGIN
 // Route::get('/admin', function () {return view('admin.login_admin');})->name('login');
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
+// Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
 Route::middleware(['auth', 'check.role:admin'])->group(function () {
         Route::get('/admin/dashboard', [AntreanAdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
@@ -62,7 +62,6 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
         Route::post('/admin/datauser/store', [UserManagementController::class, 'store'])->name('admin.datauser.store');
         Route::get('/admin/user-image/{filename}', [UserManagementController::class, 'getImage'])->name('admin.user-image');
         Route::get('/admin/datauser/edit/{id}', [UserManagementController::class, 'edit'])->name('admin.datauser.edit');
-        
         Route::put('/admin/datauser/update/{id}', [UserManagementController::class, 'update'])->name('admin.datauser.update');
         Route::delete('/admin/datauser/{id}', [UserManagementController::class, 'destroy'])->name('admin.datauser.destroy');
     });
@@ -77,14 +76,16 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 // HALAMAN DENGAN AKSES LOGIN
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profil');
+
     // UPDATE PROFIL
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/antrean/{id_antrean}/batalkan', [AntreanController::class, 'batalkan'])->name('antrean.batalkan');
     Route::patch('/antrean/{id_antrean}/selesai', [AntreanController::class, 'markAsSelesai'])->name('antrean.selesai');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
     // JANJI TEMU
     Route::post('/janji-temu', [AntreanController::class, 'store'])->name('user.janjiTemu.store');
-    Route::get('/janji-temu', [AntreanController::class, 'index'])->name('user.janjiTemu.index');
+    //Route::get('/janji-temu', [AntreanController::class, 'index'])->name('user.janjiTemu.index');
     Route::get('/janji-temu', [AntreanController::class, 'index'])->name('user.janjitemu');
 });
 
@@ -119,8 +120,7 @@ Route::get('/register', function () {
 Route::get('/ulasan', function () {
     return view('user.ulasan');
 })->name('user.ulasan');
+
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
 Route::get('/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
 Route::get('/ulasan', [UlasanController::class, 'index'])->name('user.ulasan');
-
-

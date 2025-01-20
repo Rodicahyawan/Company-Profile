@@ -12,7 +12,6 @@
     <!-- Navbar/Header -->
     @include('user.layout')
 
-
     <!-- Overlay untuk menu popup -->
     <div class="overlay"></div>
 
@@ -73,7 +72,6 @@
         <a href="{{ route('layanan.index') }}" class="lihat-semua-button">Lihat Semua</a>
     </div>
 
-
     <!-- Card -->
     <div class="container-custom">
         <div class="card-container">
@@ -99,15 +97,15 @@
 
     <!-- Galeri Gambar -->
     <div class="gallery-wrapper">
-    <div class="gallery-container">
-        @foreach($galeri as $item)
-            <div class="gallery-card">
-                <div class="gallery-image" style="background-image: url('{{ asset('storage/' . $item->gambar) }}');"></div>
-                <p class="gallery-caption">{{ $item->nama_perawatan }}</p>
-            </div>
-        @endforeach
+        <div class="gallery-container">
+            @foreach($galeri as $item)
+                <div class="gallery-card">
+                    <div class="gallery-image" style="background-image: url('{{ asset('storage/' . $item->gambar) }}');"></div>
+                    <p class="gallery-caption">{{ $item->nama_perawatan }}</p>
+                </div>
+            @endforeach
+        </div>
     </div>
-</div>
 
 
     <!-- Judul -->

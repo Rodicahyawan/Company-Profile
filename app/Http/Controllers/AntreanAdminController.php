@@ -8,6 +8,7 @@ use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use App\Models\Layanan;
 use App\Models\User;
+use Carbon\Carbon;
 
 class AntreanAdminController extends Controller
 {
@@ -41,39 +42,44 @@ class AntreanAdminController extends Controller
     
 
     public function dashboard()
-{
-    // Hitung jumlah untuk dashboard
-    $jumlahAntreanHariIni = AdminAntrean::whereDate('tanggal_kedatangan', today())
-        ->where('status_antrean', 'Dalam Antrean')
-        ->count();
+    {
+        // Hitung jumlah untuk dashboard
+        $jumlahAntreanHariIni = AdminAntrean::whereDate('tanggal_kedatangan', today())
+            ->where('status_antrean', 'Dalam Antrean')
+            ->count();
 
-    $jumlahAntreanMendatang = AdminAntrean::whereDate('tanggal_kedatangan', '>', today())
-        ->where('status_antrean', 'Dalam Antrean')
-        ->count();
+        $jumlahAntreanMendatang = AdminAntrean::whereDate('tanggal_kedatangan', '>', today())
+            ->where('status_antrean', 'Dalam Antrean')
+            ->count();
 
-    $jumlahAntreanSelesai = AdminAntrean::where('status_antrean', 'Selesai')->count();
+        $jumlahAntreanSelesai = AdminAntrean::where('status_antrean', 'Selesai')
+            ->whereYear('tanggal_kedatangan', Carbon::now()->year)
+            ->count();
 
-    // Hitung jumlah perawatan per bulan
-    $perawatanPerBulan = AdminAntrean::selectRaw('MONTH(tanggal_kedatangan) as bulan, COUNT(*) as total')
-        ->where('status_antrean', 'Selesai')
-        ->groupBy('bulan')
-        ->pluck('total', 'bulan')
-        ->toArray();
 
-    // Format data untuk 12 bulan
-    $perawatanBulanan = [];
-    for ($i = 1; $i <= 12; $i++) {
-        $perawatanBulanan[] = $perawatanPerBulan[$i] ?? 0; // Jika tidak ada data, isi dengan 0
+        // Hitung jumlah perawatan per bulan untuk tahun ini
+        $perawatanPerBulan = AdminAntrean::selectRaw('MONTH(tanggal_kedatangan) as bulan, COUNT(*) as total')
+            ->where('status_antrean', 'Selesai')
+            ->whereYear('tanggal_kedatangan', Carbon::now()->year)
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan')
+            ->toArray();
+            
+
+        // Format data untuk 12 bulan
+        $perawatanBulanan = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $perawatanBulanan[] = $perawatanPerBulan[$i] ?? 0; // Jika tidak ada data, isi dengan 0
+        }
+
+        // Kirim data ke view
+        return view('admin.dashboard_admin', compact(
+            'jumlahAntreanHariIni',
+            'jumlahAntreanMendatang',
+            'jumlahAntreanSelesai',
+            'perawatanBulanan'
+        ));
     }
-
-    // Kirim data ke view
-    return view('admin.dashboard_admin', compact(
-        'jumlahAntreanHariIni',
-        'jumlahAntreanMendatang',
-        'jumlahAntreanSelesai',
-        'perawatanBulanan'
-    ));
-}
 
     // Update status antrean
     public function updateStatus(Request $request)

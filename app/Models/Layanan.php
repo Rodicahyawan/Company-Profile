@@ -25,11 +25,14 @@ class Layanan extends Model
         'gambar_kedua',
         'kapan_dibutuhkan',
     ];
+    
+    // relasi ke model Antrean
     public function antrean()
     {
         return $this->hasMany(Antrean::class, 'layanan_id');
     }
 
+    // Relasi ke model Ulasan
     public function ulasan()
     {
         return $this->hasMany(Ulasan::class, 'layanan_id');
